@@ -1,0 +1,4 @@
+.env
+App-RailTrip/Lib/*
+App-RailTrip/pyvenv.cfg
+Doc Locale/
