@@ -1,3 +1,7 @@
 .env
 App-RailTrip/Lib/*
 App-RailTrip/pyvenv.cfg
+__pycache__/
+.__pycache__/
+/App-RailTrip/App/App/__pycache__
+*.pyc
