@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-{% load static %}
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RailTrain - L'Aventure Ferroviaire</title>
-    <link rel="stylesheet" href="{% static 'static/style.css' %}">
+    <title>RailTrip - L'Aventure Ferroviaire</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <header>
@@ -17,11 +16,11 @@
             <a href="{% url 'home' %}">Accueil</a>
         </nav>
     </header>
-
-    <section>
+    
+    <main>
         {% block content %}
         {% endblock %}
-    </section>
+    </main>
 
     <footer>
         <p>Mentions Légales</p>
