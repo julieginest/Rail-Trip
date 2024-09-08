@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailTrain - L'Aventure Ferroviaire</title>
+    <link rel="stylesheet" href="{% static 'static/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>RailTrip</h1>
+            <p>L'aventure ferroviaire</p>
+        </div>
+        <nav>
+            <a href="{% url 'home' %}">Accueil</a>
+        </nav>
+    </header>
+
+    <section>
+        {% block content %}
+        {% endblock %}
+    </section>
+
+    <footer>
+        <p>Mentions Légales</p>
+    </footer>
+</body>
+</html>

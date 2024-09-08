@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="search-bar">
+        <form action="{% url 'search' %}" method="GET">
+            <label for="depart">Départ</label>
+            <input type="text" id="depart" name="depart">
+
+            <label for="arrive">Arrivé</label>
+            <input type="text" id="arrive" name="arrive">
+
+            <label for="jour">Jour</label>
+            <input type="date" id="jour" name="jour">
+
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
+
+    <div class="results">
+        <!-- Boucle pour afficher les résultats de voyages -->
+        {% for voyage in voyages %}
+        <div class="voyage-card">
+            <p><strong>Départ :</strong> {{ voyage.depart }}</p>
+            <p><strong>Arrivée :</strong> {{ voyage.arrive }}</p>
+            <p><strong>Horaire :</strong> 10h00 - 15h00</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
