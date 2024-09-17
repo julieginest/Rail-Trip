@@ -10,10 +10,11 @@ class Utilisateur(models.Model):
 class RoadTrip(models.Model):
     id = models.AutoField(primary_key=True)
     publique = models.BooleanField(default = False)
+    titre = models.CharField()
     etapes = models.CharField()
     depart = models.DateField()
     nbjour = models.IntegerField()
-    description = models.CharField()
+    description = models.TextField()
     utilisateur = models.ForeignKey(Utilisateur)
 
 class Favori(models.Model):
