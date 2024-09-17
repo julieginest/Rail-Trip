@@ -7,16 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RailTrip - L'Aventure Ferroviaire</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
-        <div class="logo">
-            <h1>RailTrip</h1>
-            <p>L'aventure ferroviaire</p>
-        </div>
-        <nav>
-            <a href="{% url 'home' %}">Accueil</a>
+        <nav class="nav">
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/about">À Propos</a></li>
+                    <li><a href="/travel">Voyager</a></li>
+                </ul>
+                
+                <div class="nav-icons">
+                    <a href="/search"><i class="ri-search-line"></i></a>
+                    <a href="/account"><i class="ri-account-circle-line"></i></a>
+                </div>
+            </div>
         </nav>
+
+        <h1 class="logo-title">
+            RailTrip
+        </h1>
+        <h2 class="logo-subtitle">
+            L'AVENTURE FERROVIAIRE
+        </h2>
+        
     </header>
     
     <main>
