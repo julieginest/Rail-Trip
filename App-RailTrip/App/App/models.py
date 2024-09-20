@@ -5,6 +5,9 @@ class Utilisateur(models.Model):
     mdp = models.CharField(max_length=128)  
     pseudo = models.CharField(max_length=50, unique=True)
     mail = models.EmailField(unique=True)
+
+    class Meta:
+      db_table = "utilisateur"
     
     
 class RoadTrip(models.Model):
@@ -17,14 +20,23 @@ class RoadTrip(models.Model):
     description = models.TextField()
     utilisateur = models.ForeignKey(Utilisateur)
 
+    class Meta:
+      db_table = "roadtrip"
+
 class Favori(models.Model):
     id = models.AutoField(primary_key=True)
     roadtrip = models.ForeignKey(RoadTrip)
     utilisateur = models.ForeignKey(Utilisateur)
+
+    class Meta:
+      db_table = "favori"
 
 class Reaction(models.Model):
     id = models.AutoField(primary_key=True)
     like = models.BooleanField(default = False)
     roadtrip = models.ForeignKey(RoadTrip)
     utilisateur = models.ForeignKey(Utilisateur)
+
+    class Meta:
+      db_table = "reaction"
 
