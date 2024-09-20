@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion - RailTrip{% endblock %}
+
+{% block extra_css %}
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .form-group {
+        margin-bottom: 15px;
+        width: 100%;
+        max-width: 300px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .login-btn {
+        background-color: #28a745;
+    }
+    .login-btn:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Connexion</h2>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+                <small style="color: red;">{{ field.errors|striptags }}</small>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn login-btn">Se connecter</button>
+</form>
+<p>Pas encore de compte ? <a href="{% url 'register' %}">S'inscrire</a></p>
+{% endblock %}
