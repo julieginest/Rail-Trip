@@ -9,3 +9,4 @@ __pycache__/
 /App-RailTrip/App/App/__pycache__
 *.pyc
 *.orig
+.idea/
