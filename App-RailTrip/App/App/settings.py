@@ -18,9 +18,11 @@ import os
 load_dotenv("../../../.env")
 
 DATABASE_ADRESS = os.getenv('DATABASE_ADRESS')
+DATABASE_PORT = os.getenv('DATABASE_PORT')
 DATABASE_NAME = os.getenv('DATABASE_NAME')
 DATABASE_USER = os.getenv('DATABASE_USER')
 DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,7 +88,12 @@ WSGI_APPLICATION = 'App.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+        'NAME': DATABASE_NAME | 'RailTrip',
+        'HOST': DATABASE_ADRESS | "localhost",
+        'USER' : DATABASE_USER | "admin",
+        'PASSWORD': DATABASE_PASSWORD | "admin",
+        'PORT': DATABASE_PORT | "3306",
     }
 }
 

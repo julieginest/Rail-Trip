@@ -1,8 +1,8 @@
 .env
 App-RailTrip/Lib/*
 <<<<<<< HEAD
-App-RailTrip/pyvenv.cf
-
+App-RailTrip/pyvenv.cfg
+=======
 App-RailTrip/pyvenv.cfg
 Doc Locale/
 >>>>>>> APIs
