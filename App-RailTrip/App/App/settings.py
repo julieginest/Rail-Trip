@@ -95,17 +95,16 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql',
         
-        'NAME': DATABASE_NAME | 'RailTrip',
-        'HOST': DATABASE_ADRESS | "localhost",
-        'USER' : DATABASE_USER | "admin",
-        'PASSWORD': DATABASE_PASSWORD | "admin",
-        'PORT': DATABASE_PORT | "3306",
+        'NAME': 'railtrip',
+        'HOST': "localhost",
+        'USER' : "root",
+        'PASSWORD': "Ahcene00",
+        'PORT': "3306",
         
          'OPTIONS':
           {'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"}
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
