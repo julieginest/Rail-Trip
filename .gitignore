@@ -1,6 +1,14 @@
 .env
 App-RailTrip/Lib/*
+App-RailTrip/pyvenv.cf
 App-RailTrip/pyvenv.cfg
 Doc Locale/
 App-RailTrip/App/Portes/data2TEST.json
 App-RailTrip/App/Portes/dataTEST.json
+App-RailTrip/pyvenv.cfg
+__pycache__/
+.__pycache__/
+/App-RailTrip/App/App/__pycache__
+*.pyc
+*.orig
+.idea/

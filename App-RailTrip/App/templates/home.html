@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - RailTrip{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Bienvenue, {{ user.pseudo }}</h1>
+        <p>Content de vous revoir sur RailTrip !</p>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn logout-btn">Se déconnecter</button>
+        </form>
+    {% else %}
+        <h1>Bienvenue sur RailTrip</h1>
+        <p>Veuillez vous connecter pour accéder à toutes les fonctionnalités.</p>
+        <a href="{% url 'login' %}" class="btn">Se connecter</a>
+    {% endif %}
+{% endblock %}
