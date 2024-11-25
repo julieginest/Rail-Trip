@@ -2,3 +2,5 @@
 App-RailTrip/Lib/*
 App-RailTrip/pyvenv.cfg
 Doc Locale/
+App-RailTrip/App/Portes/data2TEST.json
+App-RailTrip/App/Portes/dataTEST.json
