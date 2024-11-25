@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
-from MySQLdb.constants.ER import DATABASE_NAME
 from django.conf.global_settings import DATABASES
 from dotenv import load_dotenv
 import os

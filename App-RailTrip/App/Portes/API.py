@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 #####################
 
 # Récupération du .env
-load_dotenv("../../../.env")
+load_dotenv()
 API_KEY = os.getenv('API_KEY')
 API_LINK = os.getenv('API_LINK')
 
