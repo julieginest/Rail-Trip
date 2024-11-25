@@ -1,3 +1,6 @@
 Django
 requests
-dotenv
+python-dotenv
+numpy
+scipy
+mysqlclient
