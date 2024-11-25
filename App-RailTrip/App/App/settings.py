@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+
+from MySQLdb.constants.ER import DATABASE_NAME
+from django.conf.global_settings import DATABASES
 from dotenv import load_dotenv
 import os
 
 # Récupération du .env
-load_dotenv("../../../.env")
+load_dotenv()
 
 DATABASE_ADRESS = os.getenv('DATABASE_ADRESS')
 DATABASE_PORT = os.getenv('DATABASE_PORT')
@@ -95,16 +98,18 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql',
         
-        'NAME': 'railtrip',
-        'HOST': "localhost",
-        'USER' : "root",
-        'PASSWORD': "Ahcene00",
-        'PORT': "3306",
+        'NAME': DATABASE_NAME or 'railtrip',
+        'HOST': DATABASE_ADRESS or 'localhost',
+        'USER' : DATABASE_USER or 'root',
+        'PORT': DATABASE_PORT or "3306",
         
          'OPTIONS':
           {'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"}
     }
 }
+
+if (DATABASE_PASSWORD):
+    DATABASES['default']['PASSWORD'] = DATABASE_PASSWORD
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
