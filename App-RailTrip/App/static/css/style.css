@@ -1,0 +1,168 @@
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Lily+Script+One&family=Mada:wght@200..900&display=swap');
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #EFEFEF;
+}
+
+/* PAGE D'ACCUEIL */
+
+.user-login{
+    font-size: 2rem;
+    color: white;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    z-index: 5;
+}
+
+.user-login:hover{
+    color: #E39185;
+}
+.img-accueil{
+    width: 100vw;
+    height: 80vh;
+    border-radius: 0 0 10rem 10rem;
+    position: relative;
+}
+
+.over-img{
+    background-color: #D9D9D9;
+    opacity: 50%;
+    z-index: 1;
+    width: 100vw;
+    height: 80vh;
+    border-radius: 0 0 10rem 10rem;
+    position: absolute;
+    top: 0;
+}
+
+.home-title{
+    font-family: "Lily Script One", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 10rem;
+    color: white;
+    /* Centrage */
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Assurez-vous qu'il est au-dessus des autres éléments */
+}
+
+.home-subtitle{
+    font-family: "Mada", sans-serif;
+    font-size: 2rem;
+    color: white;
+    position: absolute; /* Positionnement relatif à la même zone que le titre */
+    top: 40%; /* Ajustez pour placer sous .home-title */
+    left: 50%;
+    transform: translateX(-50%); /* Centre horizontalement */
+    z-index: 2; /* Assurez que c'est visible au-dessus de l'image */
+    text-align: center; /* Alignement du texte */
+}
+
+/* Centrer et aligner les champs avec le bouton */
+.search-form {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux champs de passer à la ligne si l'espace est insuffisant */
+    align-items: center; /* Aligne verticalement les éléments */
+    justify-content: center; /* Aligne horizontalement les champs */
+    gap: 1rem; /* Espacement entre les éléments */
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    width: 90%;
+    max-width: 500px;
+
+    /* Centrage absolu */
+    position: absolute;
+    bottom: -3rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+
+/* Style des labels et des champs */
+.search-form label {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Champs d'entrée */
+.search-form input,
+.search-form select {
+    width: auto; /* Largeur automatique pour s'adapter au contenu */
+    flex: 1; /* Égalise l'espace entre les champs */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+}
+
+/* Bouton de recherche */
+.search-form button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #E39185;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    align-self: flex-end; /* Aligne le bouton avec les autres champs */
+}
+
+.search-form button:hover {
+    background-color: #e39285b3;
+}
+
+.trajet-results{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+    margin-top: 8rem;
+    margin-bottom: 5rem;
+}
+
+.trajet-result{
+    background-color: #E39185;
+    width: 30%;
+    height: 30%;
+    padding: 1rem;
+    color: white;
+    border-radius: 4rem;
+}
+
+/* FOOTER */
+/* Style pour le Footer */
+.footer {
+    background-color: #E39185;
+    color: white;
+    padding: 0.5rem 0;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 2rem; /* Espace avant le footer */
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}

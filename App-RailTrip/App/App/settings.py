@@ -11,13 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
-from django.conf.global_settings import DATABASES
 from dotenv import load_dotenv
 import os
 
 # Récupération du .env
-load_dotenv()
+load_dotenv("../../../.env")
 
 DATABASE_ADRESS = os.getenv('DATABASE_ADRESS')
 DATABASE_PORT = os.getenv('DATABASE_PORT')
@@ -63,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'App.middleware.AuthMiddleware'
+    #'App.middleware.AuthMiddleware'
 ]
 
 #LOGIN_URL = "/login"
@@ -97,18 +95,17 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql',
         
-        'NAME': DATABASE_NAME or 'railtrip',
-        'HOST': DATABASE_ADRESS or 'localhost',
-        'USER' : DATABASE_USER or 'root',
-        'PORT': DATABASE_PORT or "3306",
+        'NAME': DATABASE_NAME or 'RailTrip',
+        'HOST': DATABASE_ADRESS or "localhost",
+        'USER' : DATABASE_USER or "admin",
+        'PASSWORD': DATABASE_PASSWORD or "admin",
+        'PORT': DATABASE_PORT or "3308",
         
          'OPTIONS':
           {'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"}
     }
 }
 
-if (DATABASE_PASSWORD):
-    DATABASES['default']['PASSWORD'] = DATABASE_PASSWORD
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -145,7 +142,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Emplacement des fichiers statiques dans le dossier du projet
+]
 
+# Utilisé pour la collecte de fichiers statiques en production (quand vous utilisez collectstatic)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

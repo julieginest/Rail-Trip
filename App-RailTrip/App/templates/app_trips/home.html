@@ -1,0 +1,55 @@
+<!-- home.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="over-img"></div>
+        <a href="" class="user-login"><i class="ri-user-fill"></i></a>
+        <img src="../../static/img/train.jpg" alt="train illustration" class="img-accueil">
+        <h1 class="home-title">RailTrip</h1>
+        <p class="home-subtitle">L'AVENTURE FERROVIAIRE</p>
+
+        <form method="POST" class="search-form">
+            {% csrf_token %}
+            <div>
+                <label for="id_ville_depart">Ville de départ</label>
+                {{ form.ville_depart }}
+            </div>
+            <div>
+                <label for="id_ville_arrivee">Ville d'arrivée</label>
+                {{ form.ville_arrivee }}
+            </div>
+            <div class="date-widget">
+                <label for="id_jour_depart">Date de départ</label>
+                {{ form.jour_depart }}
+            </div>
+            <button type="submit">Rechercher</button>
+        </form>
+        
+
+
+        <!-- Affichage de la liste des road trips -->
+        {% if roadtrips %}
+            <ul class="trajet-results" >
+                {% for roadtrip in roadtrips %}
+                    <li class="trajet-result">
+                        <p><strong>Départ :</strong> {{ roadtrip.start_location }}
+                        <p><strong>Arrivée :</strong> {{ roadtrip.end_location }}</p>
+                        <p><strong>Date :</strong> {{ roadtrip.date }}</p>
+                        <p><strong>Heure de départ :</strong> {{ roadtrip.start_hour }}</p>
+                        <p><strong>Heure d'arrivée :</strong> {{ roadtrip.end_hour }}</p>
+
+                        <p>{{ roadtrip.description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun road trip n'est disponible pour le moment.</p>
+        {% endif %}
+    </div>
+    
+    <!-- Inclure le footer -->
+    {% include '../includes/footer.html' %}
+    
+{% endblock %}

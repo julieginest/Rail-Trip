@@ -11,12 +11,8 @@ import os
 from dotenv import load_dotenv
 #####################
 
-## Test ##
-from sanitize import sanitizeData
-## #### ##
-
 # Récupération du .env
-load_dotenv()
+load_dotenv("../../../.env")
 API_KEY = os.getenv('API_KEY')
 API_LINK = os.getenv('API_LINK')
 
@@ -37,22 +33,18 @@ user_agents = [
 
 
 #Appel 'API
-def Reach(Departur, Arival):
+def Reach(place):
 
     # Tuple d'authentification
     authArgs = (API_KEY,'')
     
     # Requete
-    response = requests.get(buildLink(Departur,Arival), auth=authArgs)
+    response = requests.get(buildLink("Montparnasse","Lyon"), auth=authArgs)
 
-    status = response.text
     ## Test ##
-    # print("SNCF request")
-    # print(status)
-    # print("END SNCF REQUEST")
+    status = response.text
+    print(status)
     ##########
-
-    return json.loads(status)
 
 # Génération du lien
 def buildLink(start, stop, date=date.today(), dateUse='departure'):
@@ -61,7 +53,7 @@ def buildLink(start, stop, date=date.today(), dateUse='departure'):
     date = date.strftime("%Y%m%dT%H%M%S")
 
 
-    Link = API_LINK + "/coverage/sncf/journeys?from=" + start + "&to=" + stop + "&datetime=" + date + "&datetime_represents=" + dateUse
+    Link = API_LINK + "/journeys?from=" + start + "&to=" + stop + "&datetime=" + date + "&datetime_represents=" + dateUse
     
     ## Test ##
     print(Link)
@@ -81,16 +73,15 @@ def OSM_Reach(search):
 
     except:
         headers = {'User-Agent': random.choice(user_agents)}
-        reponse = requests.get(API_OSM+url.quote(search + " gare France"), headers=headers)
+        reponse = requests.get(API_OSM+url.quote(search + " France"), headers=headers)
         reponse=reponse.text
         
 
         reponse = json.loads(reponse)
-
 
         return(url.quote(reponse[0]["lon"]+";"+reponse[0]["lat"]))
     
 
 
 ## Test ##
-#print(sanitizeData(Reach("Lille", "Paris")))
+Reach("f")
