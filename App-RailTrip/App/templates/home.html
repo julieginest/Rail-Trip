@@ -1,18 +1,271 @@
-{% extends "base.html" %}
-
-{% block title %}Accueil - RailTrip{% endblock %}
-
-{% block content %}
-    {% if user.is_authenticated %}
-        <h1>Bienvenue, {{ user.pseudo }}</h1>
-        <p>Content de vous revoir sur RailTrip !</p>
-        <form action="{% url 'logout' %}" method="post">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RailTrip - Planificateur de RoadTrip{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/home.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <!-- Header amélioré -->
+<header class="header">
+    <div class="logo-container">
+        <div class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+                <path d="M4 15L20 15M4 9L20 9M10 3L14 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            RailTrip
+        </div>
+        <span class="logo-tagline">Explorez la France en train</span>
+    </div>
+    
+    <div class="user-menu">
+        <div class="user-info">
+            <span class="welcome-text">Bienvenue,</span>
+            <span class="username">{{ user.username }}</span>
+        </div>
+        <div class="user-avatar">
+            {{ user.username|first|upper }}
+        </div>
+        <form action="{% url 'logout' %}" method="post" class="logout-form">
             {% csrf_token %}
-            <button type="submit" class="btn logout-btn">Se déconnecter</button>
+            <button type="submit" class="btn-logout">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Déconnexion</span>
+            </button>
         </form>
-    {% else %}
-        <h1>Bienvenue sur RailTrip</h1>
-        <p>Veuillez vous connecter pour accéder à toutes les fonctionnalités.</p>
-        <a href="{% url 'login' %}" class="btn">Se connecter</a>
-    {% endif %}
-{% endblock %}
+    </div>
+</header>
+        <!-- Section principale de planification -->
+        <section class="planner-section">
+            <div class="section-header">
+                <h2 class="section-title">Créer votre RoadTrip</h2>
+                <p class="section-subtitle">Ajoutez autant d'étapes que vous le souhaitez à votre voyage</p>
+            </div>
+
+            <form method="post" action="#" id="roadtripForm">
+                {% csrf_token %}
+                
+                <!-- Conteneur des étapes -->
+                <div class="roadtrip-steps" id="stepsContainer">
+                    <!-- Étape de départ -->
+                    <div class="step-group">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+    <div class="form-group">
+        <label>Ville</label>
+        <select class="city-select">...</select>
+        <div class="city-preview">...</div>
+        
+        <div class="date-group">
+            <div class="date-input-group">
+                <div class="date-input-wrapper">
+                    <label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Date d'arrivée
+                    </label>
+                    <input type="date" class="date-input" required>
+                </div>
+                <div class="date-input-wrapper">
+                    <label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Durée du séjour
+                    </label>
+                    <select class="date-input">
+                        <option value="1">1 jour</option>
+                        <option value="2">2 jours</option>
+                        <option value="3">3 jours</option>
+                        <option value="4">4 jours</option>
+                        <option value="5">5 jours</option>
+                        <option value="custom">Personnalisé...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+
+                    <!-- Première étape -->
+                    <div class="step-group">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="form-group">
+                                <label>Première étape</label>
+                                <select name="step_2" required class="city-select">
+                                    <option value="lille" selected>Lille</option>
+                                    <option value="paris">Paris</option>
+                                    <option value="lyon">Lyon</option>
+                                    <option value="marseille">Marseille</option>
+                                </select>
+                                <div class="city-preview" style="background-image: url('https://images.unsplash.com/photo-1617803017416-3eb3b5d86f46?w=500');">
+                                    <div class="city-info">
+                                        <h3>Lille</h3>
+                                        <p>Première étape</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <button type="button" class="btn-remove-step" onclick="roadtripManager.removeStep(this)" title="Supprimer cette étape">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor">
+                                <path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Actions du RoadTrip -->
+                <div class="roadtrip-actions">
+                    <!-- Bouton d'ajout d'étape -->
+                    <button type="button" class="btn btn-add-step" onclick="addStep()">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor">
+                            <path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Ajouter une étape
+                    </button>
+
+                    <!-- Configuration du voyage -->
+                    <div class="trip-config">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date de départ</label>
+                                <input type="date" name="start_date" required class="date-input" min="{{ today|date:'Y-m-d' }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Durée du voyage</label>
+                                <div class="duration-input-group">
+                                    <input type="number" name="duration" min="1" max="30" value="1" class="duration-input">
+                                    <span class="duration-suffix">jours</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nom du RoadTrip</label>
+                            <input type="text" name="trip_name" placeholder="Ex: Tour de France 2024" class="text-input" required>
+                        </div>
+                    </div>
+
+                    <!-- Bouton de sauvegarde -->
+                    <button type="submit" class="btn btn-save">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor">
+                            <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-width="2"/>
+                            <path d="M17 21v-8H7v8M7 3v5h8" stroke-width="2"/>
+                        </svg>
+                        Sauvegarder le RoadTrip
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Section des RoadTrips sauvegardés -->
+        <section class="saved-roadtrips">
+            <h2 class="section-title">Vos RoadTrips</h2>
+            <div class="roadtrips-grid">
+                <!-- RoadTrip Card 1 -->
+                <article class="roadtrip-card">
+                    <header class="roadtrip-header">
+                        <h3>Tour du Nord</h3>
+                        <div class="trip-meta">
+                            <span class="trip-duration">7 jours</span>
+                            <span class="trip-dates">12 - 18 Déc. 2024</span>
+                        </div>
+                    </header>
+
+                    <div class="trip-route">
+                        <div class="route-steps">
+                            <div class="route-step">
+                                <div class="step-marker">1</div>
+                                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=500" alt="Paris">
+                                <span>Paris</span>
+                            </div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">
+                                <div class="step-marker">2</div>
+                                <img src="https://images.unsplash.com/photo-1617803017416-3eb3b5d86f46?w=500" alt="Lille">
+                                <span>Lille</span>
+                            </div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">
+                                <div class="step-marker">3</div>
+                                <img src="https://images.unsplash.com/photo-1631857455684-a54a2f0473cd?w=500" alt="Lyon">
+                                <span>Lyon</span>
+                            </div>
+                        </div>
+
+                        <footer class="trip-actions">
+                            <button class="btn btn-outline">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor">
+                                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke-width="2"/>
+                                    <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke-width="2"/>
+                                </svg>
+                                Modifier
+                            </button>
+                            <button class="btn btn-danger">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor">
+                                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2"/>
+                                </svg>
+                                Supprimer
+                            </button>
+                        </footer>
+                    </div>
+                </article>
+
+                <!-- RoadTrip Card 2 -->
+                <article class="roadtrip-card">
+                    <header class="roadtrip-header">
+                        <h3>Sud Express</h3>
+                        <div class="trip-meta">
+                            <span class="trip-duration">4 jours</span>
+                            <span class="trip-dates">20 - 23 Déc. 2024</span>
+                        </div>
+                    </header>
+
+                    <div class="trip-route">
+                        <div class="route-steps">
+                            <div class="route-step">
+                                <div class="step-marker">1</div>
+                                <img src="https://images.unsplash.com/photo-1631857455684-a54a2f0473cd?w=500" alt="Lyon">
+                                <span>Lyon</span>
+                            </div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">
+                                <div class="step-marker">2</div>
+                                <img src="https://images.unsplash.com/photo-1589786722075-63d790383f6f?w=500" alt="Marseille">
+                                <span>Marseille</span>
+                            </div>
+                        </div>
+
+                        <footer class="trip-actions">
+                            <button class="btn btn-outline">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor">
+                                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke-width="2"/>
+                                    <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke-width="2"/>
+                                </svg>
+                                Modifier
+                            </button>
+                            <button class="btn btn-danger">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor">
+                                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2"/>
+                                </svg>
+                                Supprimer
+                            </button>
+                        </footer>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <script src="{% static 'home/home.js' %}"></script>
+</body>
+</html>
