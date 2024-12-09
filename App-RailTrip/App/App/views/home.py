@@ -13,7 +13,7 @@ def logout(request):
     return redirect("login")
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "home.html"
-    login_url = "/login/"
+    login_url = "login"
 
     def send(self, request):
         if 'logout' in self.request.POST:

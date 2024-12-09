@@ -1,2 +1,6 @@
 Django
 requests
+python-dotenv
+numpy
+scipy
+mysqlclient

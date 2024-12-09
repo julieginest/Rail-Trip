@@ -12,6 +12,21 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+from django.conf.global_settings import DATABASES
+from dotenv import load_dotenv
+import os
+
+# Récupération du .env
+load_dotenv()
+
+DATABASE_ADRESS = os.getenv('DATABASE_ADRESS')
+DATABASE_PORT = os.getenv('DATABASE_PORT')
+DATABASE_NAME = os.getenv('DATABASE_NAME')
+DATABASE_USER = os.getenv('DATABASE_USER')
+DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -79,11 +94,21 @@ WSGI_APPLICATION = 'App.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+        'ENGINE': 'django.db.backends.mysql',
+        
+        'NAME': DATABASE_NAME or 'railtrip',
+        'HOST': DATABASE_ADRESS or 'localhost',
+        'USER' : DATABASE_USER or 'root',
+        'PORT': DATABASE_PORT or "3306",
+        
+         'OPTIONS':
+          {'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"}
     }
 }
 
+if (DATABASE_PASSWORD):
+    DATABASES['default']['PASSWORD'] = DATABASE_PASSWORD
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -107,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 
@@ -129,6 +154,4 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-#LOGIN_REDIRECT_URL = "/"
 

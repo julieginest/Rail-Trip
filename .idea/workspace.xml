@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e86c5642-de59-49f1-9e98-584fa21d72a1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Rail-Trip.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/App-RailTrip/App/App/models/followers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/App-RailTrip/App/App/views/follow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/App/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/App/models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/App/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/App/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/App/views/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/App/views/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/App/views/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/App/views/home.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/App/views/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/App/views/login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/templates/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +107,7 @@
       <workItem from="1726565494143" duration="13067000" />
       <workItem from="1726579290416" duration="3754000" />
       <workItem from="1726912879172" duration="243000" />
+      <workItem from="1733754099626" duration="526000" />
     </task>
     <servers />
   </component>
