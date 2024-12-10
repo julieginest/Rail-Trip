@@ -1,0 +1,136 @@
+<!-- home.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="hero-section">
+        <div class="over-img"></div>
+        <a href="" class="user-login"><i class="ri-user-fill"></i></a>
+        <img src="../../static/img/train.jpg" alt="train illustration" class="img-accueil">
+        <h1 class="home-title">RailTrip</h1>
+        <p class="home-subtitle">L'AVENTURE FERROVIAIRE</p>
+
+        <form method="POST" class="search-form" id="searchForm">
+            {% csrf_token %}
+            <div class="search-grid">
+                <div class="items-forms">
+                    <div class="item-form left-column">
+                        <div class="form-group">
+                            <label for="id_ville_depart">
+                                <i class="ri-train-line"></i> Départ
+                            </label>
+                            {{ form.ville_depart }}
+                        </div>
+                        <div class="form-group date-widget">
+                            <label for="id_jour_depart">
+                                <i class="ri-calendar-line"></i> Date
+                            </label>
+                            {{ form.jour_depart }}
+                        </div>
+                    </div>
+                    <div class="item-form right-column">
+                        <div class="form-group">
+                            <label for="id_ville_arrivee">
+                                <i class="ri-map-pin-line"></i> Arrivée
+                            </label>
+                            {{ form.ville_arrivee }}
+                        </div>
+                        <div class="form-group time-widget">
+                            <label for="id_heure_depart">
+                                <i class="ri-time-line"></i> Heure
+                            </label>
+                            {{ form.heure_depart }}
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="search-button">
+                    <i class="ri-search-line"></i> Rechercher
+                </button>
+            </div>
+        </form>
+
+        <!-- Indicateur de chargement -->
+        <div id="loading" class="loading-spinner" style="display: none;">
+            <div class="spinner"></div>
+            <p>Recherche des meilleurs trajets...</p>
+        </div>
+
+        <!-- Résultats -->
+        <div class="results-container" id="results">
+            {% if roadtrips %}
+                <h2>Trajets disponibles ({{ roadtrips|length }})</h2>
+                <div class="trajet-results">
+                    {% for roadtrip in roadtrips %}
+                        <div class="trajet-card">
+                            <div class="trajet-header">
+                                <div class="train-type">
+                                    <i class="ri-train-line"></i>
+                                    {{ roadtrip.train_type|default:"Train" }}
+                                </div>
+                                <div class="trip-price">{{ roadtrip.price|default:"Prix non disponible" }}</div>
+                            </div>
+
+                            <div class="trajet-main">
+                                <div class="trajet-time">
+                                    <div class="time-block">
+                                        <span class="time">{{ roadtrip.start_hour }}</span>
+                                        <span class="location">{{ roadtrip.start_location }}</span>
+                                    </div>
+                                    <div class="journey-duration">
+                                        <div class="duration-line"></div>
+                                        <span class="duration">
+                                            {{ roadtrip.duration|default:"" }}
+                                        </span>
+                                    </div>
+                                    <div class="time-block">
+                                        <span class="time">{{ roadtrip.end_hour }}</span>
+                                        <span class="location">{{ roadtrip.end_location }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trajet-footer">
+                                <div class="journey-info">
+                                    <i class="ri-information-line"></i>
+                                    {{ roadtrip.description }}
+                                </div>
+                                <button class="select-button">Sélectionner</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-results">
+                    <i class="ri-error-warning-line"></i>
+                    <p>Aucun trajet disponible pour le moment.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% include '../includes/footer.html' %}
+
+<!-- Ajout du JavaScript -->
+<script>
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    const loading = document.getElementById('loading');
+    const results = document.getElementById('results');
+    const button = document.querySelector('.search-button');
+
+    loading.style.display = 'flex';
+    results.style.opacity = '0.5';
+    button.disabled = true;
+
+    setTimeout(() => {
+        loading.style.display = 'none';
+        results.style.opacity = '1';
+        button.disabled = false;
+    }, 1000);
+});
+</script>
+
+{% endblock %}
