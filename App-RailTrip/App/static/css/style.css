@@ -21,6 +21,7 @@ body {
 .user-login:hover{
     color: #E39185;
 }
+
 .img-accueil{
     width: 100vw;
     height: 80vh;
@@ -50,62 +51,83 @@ body {
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 2; /* Assurez-vous qu'il est au-dessus des autres éléments */
+    z-index: 2; 
 }
 
 .home-subtitle{
     font-family: "Mada", sans-serif;
     font-size: 2rem;
     color: white;
-    position: absolute; /* Positionnement relatif à la même zone que le titre */
-    top: 40%; /* Ajustez pour placer sous .home-title */
+    position: absolute; 
+    top: 40%; 
     left: 50%;
-    transform: translateX(-50%); /* Centre horizontalement */
-    z-index: 2; /* Assurez que c'est visible au-dessus de l'image */
-    text-align: center; /* Alignement du texte */
+    transform: translateX(-50%); 
+    z-index: 2; 
+    text-align: center; 
 }
 
-/* Centrer et aligner les champs avec le bouton */
 .search-form {
     display: flex;
-    flex-wrap: wrap; /* Permet aux champs de passer à la ligne si l'espace est insuffisant */
-    align-items: center; /* Aligne verticalement les éléments */
-    justify-content: center; /* Aligne horizontalement les champs */
-    gap: 1rem; /* Espacement entre les éléments */
+    flex-wrap: wrap;
+    align-items: center; 
+    justify-content: center; 
     padding: 1rem;
     background-color: #f8f9fa;
     border: 1px solid #ddd;
     border-radius: 0.5rem;
-    width: 90%;
-    max-width: 500px;
+    width: 60%;
 
-    /* Centrage absolu */
     position: absolute;
-    bottom: -3rem;
+    bottom: 3rem;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
 }
 
-
-/* Style des labels et des champs */
 .search-form label {
     font-weight: bold;
     color: #333;
 }
 
-/* Champs d'entrée */
+.items-forms {
+    display: flex;
+    justify-content: space-between; 
+    gap: 2rem; 
+    width: 45rem;
+}
+
+.item-form {
+    display: flex;
+    flex-direction: column; 
+    width: 49%; 
+}
+
+.left-column {
+    align-items: flex-start; 
+}
+
+.right-column {
+    align-items: flex-start; 
+}
+
+.form-group {
+    margin-bottom: 1rem; 
+}
+
+.search-form {
+    width: 70%; 
+}
+
 .search-form input,
 .search-form select {
-    width: auto; /* Largeur automatique pour s'adapter au contenu */
-    flex: 1; /* Égalise l'espace entre les champs */
+    width: auto; 
+    flex: 1; 
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
     font-size: 1rem;
 }
 
-/* Bouton de recherche */
 .search-form button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
@@ -114,29 +136,154 @@ body {
     border: none;
     border-radius: 0.25rem;
     cursor: pointer;
-    align-self: flex-end; /* Aligne le bouton avec les autres champs */
 }
 
 .search-form button:hover {
     background-color: #e39285b3;
 }
 
-.trajet-results{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    gap: 1rem;
-    margin-top: 8rem;
-    margin-bottom: 5rem;
+/* Résultat de la recherche*/
+
+
+.results-container{
+    padding: 1rem 2rem;
 }
 
-.trajet-result{
-    background-color: #E39185;
-    width: 30%;
-    height: 30%;
-    padding: 1rem;
+.trajet-results{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 1.5rem; 
+    text-align: center;
+    margin: 2rem auto; 
+    max-width: 1200px;
+}
+
+.trajet-card {
+    background: white;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    border-radius: 8px;
+}
+
+.trajet-card:hover {
+    transform: translateY(-2px);
+}
+
+.trajet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.train-type {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #E39185;
+    font-weight: 500;
+}
+
+.trip-price {
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.trajet-time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+}
+
+.journey-duration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    margin: 0 1rem;
+}
+.trajet-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    font-size: 10px;
+}
+
+.select-button {
+    background: #E39185;
     color: white;
-    border-radius: 4rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.select-button:hover {
+    background: #e39285b3;
+}
+
+.duration-line {
+    width: 100%;
+    height: 2px;
+    background: #e5e7eb;
+    position: relative;
+}
+
+.duration-line::before,
+.duration-line::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #E39185;
+    border-radius: 50%;
+    top: -3px;
+}
+
+.duration-line::before {
+    left: 0;
+}
+
+.duration-line::after {
+    right: 0;
+}
+
+.duration {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+
+/* Spinner de chargement */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* FOOTER */
@@ -166,3 +313,4 @@ body {
 .footer a:hover {
     text-decoration: underline;
 }
+

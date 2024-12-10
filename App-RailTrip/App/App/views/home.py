@@ -149,8 +149,8 @@ class HomeView(TemplateView):
                         "date": departure.strftime("%Y-%m-%d"),
                         "start_hour": departure.strftime("%H:%M"),
                         "end_hour": arrival.strftime("%H:%M"),
-                        "duration": journey.get('duration', 0) // 60  # Conversion en minutes
-                    }
+                        "duration": self._format_duration(journey.get('duration', 0) // 60 )                   
+                        }
                     trips.append(trip)
 
             return trips
@@ -158,6 +158,16 @@ class HomeView(TemplateView):
             print(f"Erreur API: {str(e)}")
             # En cas d'erreur, on retourne les trajets fictifs
             return get_fake_roadtrips(ville_depart, ville_arrivee, jour_depart)
+        
+    def _format_duration(self, duration_minutes):
+        if duration_minutes <= 0:
+            return "Durée inconnue"
+        hours = duration_minutes // 60
+        minutes = duration_minutes % 60
+        if hours > 0:
+            return f"{hours}h {minutes}min" if minutes > 0 else f"{hours}h"
+        return f"{minutes}min"
+
 
     def _get_journey_description(self, journey):
         """Génère une description du trajet basée sur les sections"""
