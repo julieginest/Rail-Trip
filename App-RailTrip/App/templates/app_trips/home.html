@@ -3,53 +3,271 @@
 {% load static %}
 
 {% block content %}
-    <div class="container">
+<div class="container">
+    <div class="hero-section">
         <div class="over-img"></div>
         <a href="" class="user-login"><i class="ri-user-fill"></i></a>
         <img src="../../static/img/train.jpg" alt="train illustration" class="img-accueil">
         <h1 class="home-title">RailTrip</h1>
         <p class="home-subtitle">L'AVENTURE FERROVIAIRE</p>
 
-        <form method="POST" class="search-form">
+        <form method="POST" class="search-form" id="searchForm">
             {% csrf_token %}
-            <div>
-                <label for="id_ville_depart">Ville de départ</label>
-                {{ form.ville_depart }}
+            <div class="search-grid">
+                <div class="form-group">
+                    <label for="id_ville_depart">
+                        <i class="ri-train-line"></i> Départ
+                    </label>
+                    {{ form.ville_depart }}
+                </div>
+                <div class="form-group">
+                    <label for="id_ville_arrivee">
+                        <i class="ri-map-pin-line"></i> Arrivée
+                    </label>
+                    {{ form.ville_arrivee }}
+                </div>
+                <div class="form-group date-widget">
+                    <label for="id_jour_depart">
+                        <i class="ri-calendar-line"></i> Date
+                    </label>
+                    {{ form.jour_depart }}
+                </div>
+                <button type="submit" class="search-button">
+                    <i class="ri-search-line"></i> Rechercher
+                </button>
             </div>
-            <div>
-                <label for="id_ville_arrivee">Ville d'arrivée</label>
-                {{ form.ville_arrivee }}
-            </div>
-            <div class="date-widget">
-                <label for="id_jour_depart">Date de départ</label>
-                {{ form.jour_depart }}
-            </div>
-            <button type="submit">Rechercher</button>
         </form>
-        
 
+        <!-- Indicateur de chargement -->
+        <div id="loading" class="loading-spinner" style="display: none;">
+            <div class="spinner"></div>
+            <p>Recherche des meilleurs trajets...</p>
+        </div>
 
-        <!-- Affichage de la liste des road trips -->
-        {% if roadtrips %}
-            <ul class="trajet-results" >
-                {% for roadtrip in roadtrips %}
-                    <li class="trajet-result">
-                        <p><strong>Départ :</strong> {{ roadtrip.start_location }}
-                        <p><strong>Arrivée :</strong> {{ roadtrip.end_location }}</p>
-                        <p><strong>Date :</strong> {{ roadtrip.date }}</p>
-                        <p><strong>Heure de départ :</strong> {{ roadtrip.start_hour }}</p>
-                        <p><strong>Heure d'arrivée :</strong> {{ roadtrip.end_hour }}</p>
+        <!-- Résultats -->
+        <div class="results-container" id="results">
+            {% if roadtrips %}
+                <h2 class="results-title">Trajets disponibles ({{ roadtrips|length }})</h2>
+                <div class="trajet-results">
+                    {% for roadtrip in roadtrips %}
+                        <div class="trajet-card">
+                            <div class="trajet-header">
+                                <div class="train-type">
+                                    <i class="ri-train-line"></i>
+                                    {{ roadtrip.train_type|default:"Train" }}
+                                </div>
+                                <div class="trip-price">{{ roadtrip.price|default:"Prix non disponible" }}</div>
+                            </div>
 
-                        <p>{{ roadtrip.description }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Aucun road trip n'est disponible pour le moment.</p>
-        {% endif %}
+                            <div class="trajet-main">
+                                <div class="trajet-time">
+                                    <div class="time-block">
+                                        <span class="time">{{ roadtrip.start_hour }}</span>
+                                        <span class="location">{{ roadtrip.start_location }}</span>
+                                    </div>
+                                    <div class="journey-duration">
+                                        <div class="duration-line"></div>
+                                        <span class="duration">
+                                            {{ roadtrip.duration|default:"" }} min
+                                        </span>
+                                    </div>
+                                    <div class="time-block">
+                                        <span class="time">{{ roadtrip.end_hour }}</span>
+                                        <span class="location">{{ roadtrip.end_location }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trajet-footer">
+                                <div class="journey-info">
+                                    <i class="ri-information-line"></i>
+                                    {{ roadtrip.description }}
+                                </div>
+                                <button class="select-button">Sélectionner</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-results">
+                    <i class="ri-error-warning-line"></i>
+                    <p>Aucun trajet disponible pour le moment.</p>
+                </div>
+            {% endif %}
+        </div>
     </div>
-    
-    <!-- Inclure le footer -->
-    {% include '../includes/footer.html' %}
-    
+</div>
+
+{% include '../includes/footer.html' %}
+
+<!-- Ajout du JavaScript -->
+<script>
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    const loading = document.getElementById('loading');
+    const results = document.getElementById('results');
+    const button = document.querySelector('.search-button');
+
+    loading.style.display = 'flex';
+    results.style.opacity = '0.5';
+    button.disabled = true;
+
+    setTimeout(() => {
+        loading.style.display = 'none';
+        results.style.opacity = '1';
+        button.disabled = false;
+    }, 1000);
+});
+</script>
+
+<style>
+/* Styles pour le formulaire */
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Styles pour les cartes de trajet */
+.trajet-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.trajet-card:hover {
+    transform: translateY(-2px);
+}
+
+.trajet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.train-type {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #2563eb;
+    font-weight: 500;
+}
+
+.trip-price {
+    font-weight: bold;
+    color: #059669;
+}
+
+.trajet-time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+}
+
+.journey-duration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    margin: 0 1rem;
+}
+
+.duration-line {
+    width: 100%;
+    height: 2px;
+    background: #e5e7eb;
+    position: relative;
+}
+
+.duration-line::before,
+.duration-line::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #2563eb;
+    border-radius: 50%;
+    top: -3px;
+}
+
+.duration-line::before {
+    left: 0;
+}
+
+.duration-line::after {
+    right: 0;
+}
+
+.duration {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.trajet-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.select-button {
+    background: #2563eb;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.select-button:hover {
+    background: #1d4ed8;
+}
+
+/* Spinner de chargement */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
 {% endblock %}
