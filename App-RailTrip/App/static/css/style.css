@@ -346,10 +346,22 @@ body {
     color: white;
     padding: 1rem;
     width: 15vw;
+    font-size: 1rem;
 }
 
 .button:hover{
     background-color: #e39285b3;
     cursor: pointer;
 }
+
+.register-link{
+    text-decoration: none;
+    color: #E39185;
+    font-weight: 600;
+}
+
+.register-link:hover{
+    color: black;
+}
+
 
