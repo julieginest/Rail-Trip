@@ -1,143 +1,130 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}RailTrip - Votre Compagnon de Voyage{% endblock %}</title>
-    <style>
-      
-    </style>
-    {% block extra_css %}{% endblock %}
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 15L20 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M4 9L20 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M10 3L14 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="logo">RailTrip</div>
-            <div class="tagline">Votre compagnon de voyage ferroviaire</div>
-        </div>
+{% extends 'base.html' %}
+{% load static %}
 
-        {% block content %}
-        <div class="form-container">
-            <h2>Créer un compte</h2>
-            <form method="post" id="registerForm">
-                {% csrf_token %}
-                
-                <div class="form-group">
-                    <label for="firstname">Prénom</label>
-                    <input type="text" id="firstname" name="firstname" placeholder="Jean" required>
-                    <span class="input-icon">👤</span>
-                </div>
+{% block content %}
 
-                <div class="form-group">
-                    <label for="lastname">Nom</label>
-                    <input type="text" id="lastname" name="lastname" placeholder="Dupont" required>
-                    <span class="input-icon">👤</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="username">Nom d'utilisateur</label>
-                    <input type="text" id="username" name="username" placeholder="jean.dupont" required>
-                    <span class="input-icon">🎯</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Adresse e-mail</label>
-                    <input type="email" id="email" name="email" placeholder="jean.dupont@example.com" required>
-                    <span class="input-icon">✉️</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="password" placeholder="••••••••" required>
-                    <span class="input-icon">🔒</span>
-                    <div class="password-strength">
-                        <div class="password-strength-bar"></div>
-                    </div>
-                    <small class="password-requirements">
-                        Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial
-                    </small>
-                </div>
-
-                <div class="form-group">
-                    <label for="password_confirm">Confirmer le mot de passe</label>
-                    <input type="password" id="password_confirm" name="password_confirm" placeholder="••••••••" required>
-                    <span class="input-icon">🔒</span>
-                </div>
-
-                <div class="terms-checkbox">
-                    <label class="remember-me">
-                        <input type="checkbox" name="terms" required>
-                        <span>J'accepte les <a href="#" class="text-primary">conditions d'utilisation</a> et la <a href="#" class="text-primary">politique de confidentialité</a></span>
-                    </label>
-                </div>
-
-                <div class="newsletter-checkbox">
-                    <label class="remember-me">
-                        <input type="checkbox" name="newsletter">
-                        <span>Je souhaite recevoir les actualités et les offres de RailTrip par email</span>
-                    </label>
-                </div>
-
-                {% if form.errors %}
-                <div class="error-message">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M8 14A6 6 0 108 2a6 6 0 000 12zM8 5v4M8 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            {{ error }}
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                <button type="submit" class="btn login-btn">
-                    <span>Créer mon compte</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </form>
-
-            <div class="social-login">
-                <div class="social-login-text">Ou s'inscrire avec</div>
-                <div class="social-buttons">
-                    <button type="button" class="social-btn google-btn">
-                        <svg width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M12.545,12.151L12.545,12.151c0,1.054,0.855,1.909,1.909,1.909h3.536c-0.229,1.205-0.999,2.178-2.063,2.616c-0.612,0.253-1.287,0.39-1.991,0.39c-2.225,0-4.127-1.442-4.8-3.44c-0.228-0.677-0.35-1.397-0.35-2.14c0-0.742,0.121-1.462,0.349-2.139c0.192-0.577,0.478-1.11,0.849-1.584c0.849-1.09,2.172-1.792,3.663-1.792c1.534,0,2.891,0.738,3.738,1.87l2.628-2.628c-1.564-1.564-3.722-2.532-6.104-2.532c-4.762,0-8.622,3.86-8.622,8.622s3.86,8.622,8.622,8.622c2.383,0,4.541-0.969,6.104-2.532c1.563-1.564,2.532-3.722,2.532-6.104v-1.909H14.454C13.4,12.151,12.545,13.006,12.545,12.151z" fill="#DB4437"/>
-                        </svg>
-                        <span>Google</span>
-                    </button>
-                    
-                    <button type="button" class="social-btn facebook-btn">
-                        <svg width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M20.9,2H3.1C2.5,2,2,2.5,2,3.1v17.8C2,21.5,2.5,22,3.1,22h9.6v-7.7h-2.6v-3h2.6V9.2c0-2.6,1.6-4,3.9-4c1.1,0,2.1,0.1,2.3,0.1v2.7l-1.6,0c-1.3,0-1.5,0.6-1.5,1.5v1.9h3l-0.4,3h-2.6V22h5.1c0.6,0,1.1-0.5,1.1-1.1V3.1C22,2.5,21.5,2,20.9,2z" fill="#1877F2"/>
-                        </svg>
-                        <span>Facebook</span>
-                    </button>
-                    
-                    <button type="button" class="social-btn apple-btn">
-                        <svg width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M17.2,12.1c0-2.7,2.2-4,2.3-4.1c-1.3-1.8-3.2-2.1-3.9-2.1c-1.7-0.2-3.3,1-4.1,1c-0.9,0-2.2-1-3.6-1c-1.9,0-3.6,1.1-4.5,2.7c-1.9,3.3-0.5,8.3,1.4,11c0.9,1.3,2,2.8,3.4,2.7c1.4-0.1,1.9-0.9,3.6-0.9c1.7,0,2.1,0.9,3.6,0.9c1.5,0,2.4-1.3,3.3-2.7c1-1.5,1.4-3,1.5-3.1C19.9,16.5,17.2,15.3,17.2,12.1z M14.8,6.9c0.7-0.9,1.3-2.1,1.1-3.3c-1.1,0-2.4,0.7-3.2,1.6c-0.7,0.8-1.3,2.1-1.1,3.3C12.7,8.6,14,7.8,14.8,6.9z" fill="#000000"/>
-                        </svg>
-                        <span>Apple</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="register-section">
-                <p class="register-link">
-                    Déjà un compte ? <a href="{% url 'login' %}">Se connecter</a>
-                </p>
-            </div>
-        </div>
-        {% endblock content %}
+<div class="container-register">
+    <div class="header">
     </div>
+    
+    <div class="form-container">
+        <div class="logo">RailTrip</div>
+        <div class="tagline">Votre compagnon de voyage ferroviaire</div>
+        <h2>Créer un compte</h2>
+        <form method="post" id="registerForm">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="firstname">Prénom</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Jean" required>
+                <span class="input-icon">👤</span>
+            </div>
+
+            <div class="form-group">
+                <label for="lastname">Nom</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Dupont" required>
+                <span class="input-icon">👤</span>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="username" placeholder="jean.dupont" required>
+                <span class="input-icon">🎯</span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Adresse e-mail</label>
+                <input type="email" id="email" name="email" placeholder="jean.dupont@example.com" required>
+                <span class="input-icon">✉️</span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+                <span class="input-icon">🔒</span>
+                <div class="password-strength">
+                    <div class="password-strength-bar"></div>
+                </div>
+                <small class="password-requirements">
+                    Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirm">Confirmer le mot de passe</label>
+                <input type="password" id="password_confirm" name="password_confirm" placeholder="••••••••" required>
+                <span class="input-icon">🔒</span>
+            </div>
+
+            <div class="terms-checkbox">
+                <label class="remember-me">
+                    <input type="checkbox" name="terms" required>
+                    <span>J'accepte les <a href="#" class="text-primary">conditions d'utilisation</a> et la <a href="#" class="text-primary">politique de confidentialité</a></span>
+                </label>
+            </div>
+
+            <div class="newsletter-checkbox">
+                <label class="remember-me">
+                    <input type="checkbox" name="newsletter">
+                    <span>Je souhaite recevoir les actualités et les offres de RailTrip par email</span>
+                </label>
+            </div>
+
+            {% if form.errors %}
+            <div class="error-message">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 14A6 6 0 108 2a6 6 0 000 12zM8 5v4M8 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <button type="submit" class="btn login-btn">
+                <span>Créer mon compte</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </form>
+
+        <div class="social-login">
+            <div class="social-login-text">Ou s'inscrire avec</div>
+            <div class="social-buttons">
+                <button type="button" class="social-btn google-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M12.545,12.151L12.545,12.151c0,1.054,0.855,1.909,1.909,1.909h3.536c-0.229,1.205-0.999,2.178-2.063,2.616c-0.612,0.253-1.287,0.39-1.991,0.39c-2.225,0-4.127-1.442-4.8-3.44c-0.228-0.677-0.35-1.397-0.35-2.14c0-0.742,0.121-1.462,0.349-2.139c0.192-0.577,0.478-1.11,0.849-1.584c0.849-1.09,2.172-1.792,3.663-1.792c1.534,0,2.891,0.738,3.738,1.87l2.628-2.628c-1.564-1.564-3.722-2.532-6.104-2.532c-4.762,0-8.622,3.86-8.622,8.622s3.86,8.622,8.622,8.622c2.383,0,4.541-0.969,6.104-2.532c1.563-1.564,2.532-3.722,2.532-6.104v-1.909H14.454C13.4,12.151,12.545,13.006,12.545,12.151z" fill="#DB4437"/>
+                    </svg>
+                    <span>Google</span>
+                </button>
+                
+                <button type="button" class="social-btn facebook-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M20.9,2H3.1C2.5,2,2,2.5,2,3.1v17.8C2,21.5,2.5,22,3.1,22h9.6v-7.7h-2.6v-3h2.6V9.2c0-2.6,1.6-4,3.9-4c1.1,0,2.1,0.1,2.3,0.1v2.7l-1.6,0c-1.3,0-1.5,0.6-1.5,1.5v1.9h3l-0.4,3h-2.6V22h5.1c0.6,0,1.1-0.5,1.1-1.1V3.1C22,2.5,21.5,2,20.9,2z" fill="#1877F2"/>
+                    </svg>
+                    <span>Facebook</span>
+                </button>
+                
+                <button type="button" class="social-btn apple-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M17.2,12.1c0-2.7,2.2-4,2.3-4.1c-1.3-1.8-3.2-2.1-3.9-2.1c-1.7-0.2-3.3,1-4.1,1c-0.9,0-2.2-1-3.6-1c-1.9,0-3.6,1.1-4.5,2.7c-1.9,3.3-0.5,8.3,1.4,11c0.9,1.3,2,2.8,3.4,2.7c1.4-0.1,1.9-0.9,3.6-0.9c1.7,0,2.1,0.9,3.6,0.9c1.5,0,2.4-1.3,3.3-2.7c1-1.5,1.4-3,1.5-3.1C19.9,16.5,17.2,15.3,17.2,12.1z M14.8,6.9c0.7-0.9,1.3-2.1,1.1-3.3c-1.1,0-2.4,0.7-3.2,1.6c-0.7,0.8-1.3,2.1-1.1,3.3C12.7,8.6,14,7.8,14.8,6.9z" fill="#000000"/>
+                    </svg>
+                    <span>Apple</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="register-section">
+            <p class="register-link">
+                Déjà un compte ? <a href="{% url 'login' %}">Se connecter</a>
+            </p>
+        </div>
+    </div>
+    {% endblock content %}
+</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

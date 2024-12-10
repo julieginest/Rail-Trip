@@ -316,7 +316,8 @@ body {
 
 /* ==================== LOGIN ==================== */
 
-.container-login{
+.container-login,
+.container-register{
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -363,5 +364,11 @@ body {
 .register-link:hover{
     color: black;
 }
+/* ==================== REGISTER ==================== */
+
+.tagline{
+    font-style: 0.1rem;
+}
+
 
 
