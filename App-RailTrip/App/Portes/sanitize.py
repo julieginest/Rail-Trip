@@ -33,7 +33,7 @@ def sanitizeData(datas):
 
                     "departure_date_time": p["departure_date_time"], # heure de départ
                     "arrival_date_time": p["arrival_date_time"], # heure d'arrivée
-                    "price": prix(p["geojson"]["properties"][0]["length"], p["departure_date_time"], p["display_informations"]["network"])
+                    "price": prix(p["geojson"]["properties"][0]["length"] / 1000, p["departure_date_time"], p["display_informations"]["network"])
                 })
         formatedJourneys.append(steps)
     return formatedJourneys
