@@ -111,13 +111,16 @@ def get_fake_roadtrips(ville_depart=None, ville_arrivee=None, jour_depart=None):
 
     return filtered_trips
 
-
 class TrajetForm(forms.Form):
     ville_depart = forms.CharField(max_length=100, required=True, label="Ville de départ")
     ville_arrivee = forms.CharField(max_length=100, required=True, label="Ville d'arrivée")
     jour_depart = forms.DateField(required=True, label="Date de départ", widget=forms.SelectDateWidget())
-
-
+    heure_depart = forms.TimeField(
+        required=True,
+        label="Heure de départ",
+        widget=forms.TimeInput(attrs={'type': 'time'}),
+        initial='09:00'
+    )
 class HomeView(TemplateView):
     template_name = "app_trips/home.html"
 
@@ -183,16 +186,19 @@ class HomeView(TemplateView):
             ville_depart = form.cleaned_data['ville_depart']
             ville_arrivee = form.cleaned_data['ville_arrivee']
             jour_depart = form.cleaned_data['jour_depart']
+            heure_depart = form.cleaned_data['heure_depart']
+
+            # Combinaison de la date et de l'heure
+            date_heure_depart = datetime.combine(jour_depart, heure_depart)
 
             # Essayer d'obtenir les vrais trajets via l'API
-            roadtrips = self.get_real_trips(ville_depart, ville_arrivee, jour_depart)
+            roadtrips = self.get_real_trips(ville_depart, ville_arrivee, date_heure_depart)
 
-            # Si aucun résultat de l'API, utiliser les données fictives
             if not roadtrips:
                 roadtrips = get_fake_roadtrips(
                     ville_depart=ville_depart,
                     ville_arrivee=ville_arrivee,
-                    jour_depart=jour_depart
+                    jour_depart=date_heure_depart
                 )
         else:
             roadtrips = []
