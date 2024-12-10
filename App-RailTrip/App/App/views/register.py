@@ -3,7 +3,7 @@ from django.contrib import messages
 from ..forms import RegisterForm
 
 class RegisterView(FormView):
-    template_name = "register.html"
+    template_name = "app_users/register.html"
     form_class = RegisterForm
     success_url = "/login/"
 
