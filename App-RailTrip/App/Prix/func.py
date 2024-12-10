@@ -62,7 +62,7 @@ def prix(distance, dateTime, network):
     timeFloat = dateTime.hour + dateTime.minute / 60
     coefHeure = multiplicatHeure(timeFloat)
 
-    kmPrice = 0.75
+    kmPrice = 0.3
     match network:
         case 'TGV INOUI':
             kmPrice = 0.5
