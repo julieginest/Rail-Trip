@@ -119,5 +119,5 @@ def prix(distance, dateTime, network):
     return roundedPrice
 
 ## TEST ##
-print(prix(250,datetime.datetime(2024,2,2,2,2), "TGV INOUI"))
+# print(prix(250,datetime.datetime(2024,2,2,2,2), "TGV INOUI"))
 ## #### ##
