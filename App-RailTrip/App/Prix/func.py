@@ -70,5 +70,6 @@ def prix(distance, dateTime, network):
             kmPrice = 0.25
     
     
-
-    return (coefHeure * kmPrice * distance)/math.exp(distance / 1000)
+    price = (coefHeure * kmPrice * distance)/math.exp(distance / 1000)
+    roundedPrice = round(price,2)
+    return roundedPrice
