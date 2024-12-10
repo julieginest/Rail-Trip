@@ -316,3 +316,40 @@ body {
 
 /* ==================== LOGIN ==================== */
 
+.container-login{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #E39185;
+}
+
+.logo{
+    font-family: "Lily Script One", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+}
+
+.form-container{
+    background-color: white;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 2rem;
+}
+
+.button{
+    background-color: #E39185;
+    border-radius: 2rem;
+    border: none;
+    color: white;
+    padding: 1rem;
+    width: 15vw;
+}
+
+.button:hover{
+    background-color: #e39285b3;
+    cursor: pointer;
+}
+

@@ -3,22 +3,24 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="logo">RailTrip</div>
-    <h2>Connexion</h2>
-    <form method="post">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="form-group">
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.errors %}
-            <div class="error-message">{{ field.errors|striptags }}</div>
-            {% endif %}
-        </div>
-        {% endfor %}
-        <button type="submit" class="btn login-btn">Se connecter</button>
-    </form>
+<div class="container-login">
+    <div class="form-container">
+        <div class="logo">RailTrip</div>
+        <h2>Connexion</h2>
+        <form method="post" class="form-container">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                <div class="error-message">{{ field.errors|striptags }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="button">Se connecter</button>
+        </form>
+    </div>
 
     {% endblock %}
 </div>
