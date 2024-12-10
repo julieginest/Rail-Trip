@@ -58,18 +58,66 @@ def multiplicatJour(x, A=2, L=0.25, k=0.1):
 
     return L + (A - L) * np.exp(-k * x)
 
+def nwPrice(network):
+    tgv = [
+        "DB SNCF",
+        "Eurostar",
+        "TGV INOUI",
+        "TGV Lyria",
+    ]
+    tgvLowCost = [
+        "OUIGO",
+        "OUIGO Train Classique",
+    ]
+    TERs = [
+        "Aléop",
+        "BreizhGo",
+        "FLUO",
+        "LEX",
+        "MOBIGO",
+        "NOMAD",
+        "NightJet",
+        "REGIONAURA",
+        "RÉMI",
+        "RÉMI Exp.",
+        "SNCF",
+        "SOLEA",
+        "TER",
+        "TER HDF",
+        "TER NA",
+    ]
+    intercite=[
+        "Intercités",
+        "Intercités de nuit",
+    ]
+
+    if network in tgv:
+        return 0.5
+    if network in tgvLowCost:
+        return 0.25
+    if network in TERs:
+        return 0.07
+    if network in intercite:
+        return 0.2
+    return 0.2
+
 def prix(distance, dateTime, network):
     timeFloat = dateTime.hour + dateTime.minute / 60
     coefHeure = multiplicatHeure(timeFloat)
-
-    kmPrice = 0.3
-    match network:
-        case 'TGV INOUI':
-            kmPrice = 0.5
-        case 'OUIGO':
-            kmPrice = 0.25
-    
-    
-    price = (coefHeure * kmPrice * distance)/math.exp(distance / 1000)
-    roundedPrice = round(price,2)
+    idfm = [
+        "RER",
+        "TRANSILIEN",
+    ]
+    if(network in idfm):
+        roundedPrice=2.5
+    else:
+        kmPrice = nwPrice(network)
+        
+        
+        price = (coefHeure * distance * kmPrice)/math.exp(distance / 1000)
+        roundedPrice = round(price,2)
     return roundedPrice
+
+## TEST ##
+print(prix(250,datetime.datetime(2024,2,2,2,2), "TGV INOUI"))
+## #### ##
