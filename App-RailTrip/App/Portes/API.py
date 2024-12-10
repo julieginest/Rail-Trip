@@ -37,13 +37,13 @@ user_agents = [
 
 
 #Appel 'API
-def Reach(Departur, Arival):
+def Reach(Departure, Arival, date=date.today(),dateUse='departure'):
 
     # Tuple d'authentification
     authArgs = (API_KEY,'')
     
     # Requete
-    response = requests.get(buildLink(Departur,Arival), auth=authArgs)
+    response = requests.get(buildLink(Departure,Arival, date, dateUse), auth=authArgs)
 
     status = response.text
     ## Test ##
