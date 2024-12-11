@@ -1,0 +1,18 @@
+<!-- home.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="sidebar">
+    <ul class="menu">
+        <h2 class="logo logo-menu">RailTrip</h2>
+        <li><a href=""><i class="ri-save-line"></i> Mes enregistrements</a></li>
+        <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
+        <li><a href=""><i class="ri-heart-line"></i> Mes favoris</a></li>
+        <li><a href=""><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
+    </ul>
+</div>
+
+{% endblock %}
+
+{% include '../includes/footer.html' %}
