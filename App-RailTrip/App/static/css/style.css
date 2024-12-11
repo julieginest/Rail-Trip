@@ -415,8 +415,14 @@ body {
 
 /* ==================== PROFILE ==================== */
 
+.profile-layout {
+    display: flex; /* Utilisation de flexbox */
+    height: 100vh; /* Prend toute la hauteur de l'écran */
+    overflow: hidden; /* Empêche le débordement */
+}
+
 .sidebar {
-    position: fixed;
+    position: fixed; /* Fixée à gauche */
     top: 0;
     left: 0;
     width: 250px;
@@ -430,6 +436,22 @@ body {
     z-index: 1000;
 }
 
+.container-profile {
+    margin-left: 250px; 
+    padding: 0 5rem;
+    flex: 1; 
+    background-color: #EFEFEF;
+    overflow-y: auto; 
+}
+
+.profile-header h1 {
+    margin-bottom: 1rem;
+}
+
+.profile-content p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
 .menu {
     list-style: none;
     padding: 0;
@@ -461,3 +483,4 @@ body {
 .logo-menu{
     color: white;
 }
+

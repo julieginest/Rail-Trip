@@ -9,6 +9,11 @@
         <h2>Connexion</h2>
         <form method="post" class="form-container">
             {% csrf_token %}
+            {% if form.non_field_errors %}
+            <div class="error-message" style="background-color: rgba(255, 0, 0, 0.1); padding: 10px; border-radius: 5px; color: #990000;">
+                {{ form.non_field_errors|striptags }}
+            </div>
+            {% endif %}
             {% for field in form %}
             <div class="form-group">
                 {{ field.label_tag }}
@@ -22,8 +27,7 @@
             <p>Pas encore de compte ? <a href="{% url 'register' %}" class="register-link">S'inscrire</a></p>
         </form>
     </div>
-
-    {% endblock %}
 </div>
+{% endblock content %}
 </body>
 </html>

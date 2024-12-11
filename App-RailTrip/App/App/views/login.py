@@ -10,12 +10,12 @@ class LoginView(FormView):
     success_url = reverse_lazy("profile")
 
     def form_valid(self, form):
-        pseudo = form.cleaned_data["pseudo"]
         user = form.get_user()
+        # Store user ID in session
         self.request.session["user_id"] = user.id
-        messages.success(self.request, f"{pseudo}, connexion réussie.")
-        return redirect('home')
+        messages.success(self.request, f"Bienvenue, {user.pseudo}.")
+        return redirect(self.success_url)
 
     def form_invalid(self, form):
-        messages.error(self.request, "Le formulaire est invalide.")  # Added self.request
-        return redirect('login')
+        messages.error(self.request, "Le pseudo ou le mot de passe est incorrect.")
+        return self.render_to_response(self.get_context_data(form=form))

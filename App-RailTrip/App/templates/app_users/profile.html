@@ -3,14 +3,26 @@
 {% load static %}
 
 {% block content %}
-<div class="sidebar">
-    <ul class="menu">
-        <h2 class="logo logo-menu">RailTrip</h2>
-        <li><a href=""><i class="ri-save-line"></i> Mes enregistrements</a></li>
-        <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
-        <li><a href=""><i class="ri-heart-line"></i> Mes favoris</a></li>
-        <li><a href=""><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
-    </ul>
+<div class="profile-layout">
+    <div class="sidebar">
+        <ul class="menu">
+            <h2 class="logo logo-menu">RailTrip</h2>
+            <li><a href=""><i class="ri-save-line"></i> Mes enregistrements</a></li>
+            <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
+            <li><a href=""><i class="ri-heart-line"></i> Mes favoris</a></li>
+            <li><a href=""><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
+            <li><a href="{% url 'logout' %}"><i class="ri-close-line"></i> Se déconnecter</a></li>
+        </ul>
+    </div>
+
+    <div class="container-profile">
+        <div class="profile-header">
+            <h1>Bienvenue, {{ pseudo }} !</h1>
+        </div>
+        <div class="profile-content">
+            <p>Vous êtes connecté sur RailTrip. Profitez de votre expérience !</p>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
