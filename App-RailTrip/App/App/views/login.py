@@ -7,7 +7,7 @@ from ..forms import LoginForm
 class LoginView(FormView):
     template_name = "app_users/login.html"
     form_class = LoginForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("profile")
 
     def form_valid(self, form):
         pseudo = form.cleaned_data["pseudo"]
@@ -18,4 +18,4 @@ class LoginView(FormView):
 
     def form_invalid(self, form):
         messages.error(self.request, "Le formulaire est invalide.")  # Added self.request
-        return redirect('home')
+        return redirect('login')
