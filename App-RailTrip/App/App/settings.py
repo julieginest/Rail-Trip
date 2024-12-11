@@ -95,7 +95,7 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql',
         
-        'NAME': DATABASE_NAME or 'RailTrip',
+        'NAME': DATABASE_NAME or 'railtrip',
         'HOST': DATABASE_ADRESS or "localhost",
         'USER' : DATABASE_USER or "admin",
         'PASSWORD': DATABASE_PASSWORD or "admin",
