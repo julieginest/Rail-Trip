@@ -17,5 +17,5 @@ class LoginView(FormView):
         return redirect(self.success_url)
 
     def form_invalid(self, form):
-        messages.error(self.request, "Le pseudo ou le mot de passe est incorrect.")
+        messages.error(self.request, "Le nom d'utilisateur ou le mot de passe est incorrect.")
         return self.render_to_response(self.get_context_data(form=form))

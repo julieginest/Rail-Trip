@@ -17,9 +17,9 @@ class LoginForm(forms.Form):
         try:
             user = Utilisateur.objects.get(pseudo=pseudo)
             if not check_password(mdp, user.mdp):
-                raise forms.ValidationError("Le pseudo ou le mot de passe est incorrect.")
+                raise forms.ValidationError("Le nom d'utilisateur ou le mot de passe est incorrect.")
         except Utilisateur.DoesNotExist:
-            raise forms.ValidationError("Le pseudo ou le mot de passe est incorrect.")
+            raise forms.ValidationError("Le nom d'utilisateur ou le mot de passe est incorrect.")
 
         return cleaned_data
 
