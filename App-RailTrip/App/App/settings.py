@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 import os
 
 # Récupération du .env
-load_dotenv("../../../.env")
+load_dotenv()
 
 DATABASE_ADRESS = os.getenv('DATABASE_ADRESS')
 DATABASE_PORT = os.getenv('DATABASE_PORT')
