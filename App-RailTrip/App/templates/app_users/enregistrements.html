@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4">Mes Roadtrips</h1>
+    <div class="row">
+        {% for roadtrip in roadtrips %}
+            <div class="col-md-4 my-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ roadtrip.etapes }}</h5>
+                        <p class="card-text"><strong>Départ :</strong> {{ roadtrip.depart }}</p>
+                        <p class="card-text"><strong>Durée :</strong> {{ roadtrip.nbjour }} jours</p>
+                        <p class="card-text">{{ roadtrip.description }}</p>
+                        <p class="card-text">
+                            <strong>Visibilité :</strong> 
+                            {% if roadtrip.publique %} Public {% else %} Privé {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if not roadtrips %}
+        <p class="text-center my-4">Vous n'avez créé aucun roadtrip pour le moment.</p>
+    {% endif %}
+</div>
+{% endblock %}
