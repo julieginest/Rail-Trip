@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import HomeView, LoginView, RegisterView, ProfileView, logout_view, EnregistrementsView, DeleteRoadTripView
+from .views import HomeView, LoginView, RegisterView, ProfileView, logout_view, EnregistrementsView, DeleteRoadTripView, FavorisView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     path('logout/', logout_view , name='logout'),
     path('enregistrements/', EnregistrementsView.as_view(), name='enregistrements'),
     path('roadtrip/delete/<int:roadtrip_id>/', DeleteRoadTripView.as_view(), name='delete_roadtrip'),
+    path('favoris/', FavorisView.as_view(), name='favoris'),
 ]
 
 

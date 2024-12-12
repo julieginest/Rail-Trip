@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="enregistrements-layout">
+    <div class="sidebar">
+        <ul class="menu">
+            <h2 class="logo logo-menu">RailTrip</h2>
+            <li><a href="{% url 'enregistrements' %}"><i class="ri-user-line"></i> Mes enregistrements</a></li>
+            <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
+            <li><a href=""><i class="ri-heart-line"></i> Mes favoris</a></li>
+            <li><a href=""><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
+            <li><a href="{% url 'logout' %}"><i class="ri-close-line"></i> Se déconnecter</a></li>
+        </ul>
+    </div>
+
+    <div class="container-profile">
+        <h1 class="text-center my-4">Mes Favoris</h1>
+    </div>
+</div>
+{% endblock %}
+
+{% include '../includes/footer.html' %}

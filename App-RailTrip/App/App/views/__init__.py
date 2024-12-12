@@ -5,3 +5,4 @@ from .profile import ProfileView
 from .logout import logout_view
 from .enregistrements import EnregistrementsView
 from .enregistrements import DeleteRoadTripView
+from .favoris import FavorisView

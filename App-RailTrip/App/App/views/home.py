@@ -16,6 +16,7 @@ class TrajetForm(forms.Form):
         widget=forms.TimeInput(attrs={'type': 'time'}),
         initial='09:00'
     )
+    
 class HomeView(TemplateView):
     template_name = "app_trips/home.html"
 

@@ -28,6 +28,7 @@ class EnregistrementsView(TemplateView):
         context["roadtrips"] = roadtrips
         return context
 
+
 class DeleteRoadTripView(View):
     def post(self, request, roadtrip_id):
         user_id = request.session.get("user_id")
@@ -38,11 +39,8 @@ class DeleteRoadTripView(View):
 
         roadtrip = get_object_or_404(RoadTrip, id=roadtrip_id, utilisateur=user)
 
-        # Supprime le roadtrip
         roadtrip.delete()
 
-        # Ajoute un message de succès
         messages.success(request, "Le roadtrip a été supprimé avec succès.")
 
-        # Redirige vers la page des enregistrements
         return redirect("enregistrements")
