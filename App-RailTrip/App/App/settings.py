@@ -153,3 +153,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = 'login'
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Utiliser la base de données pour les sessions
+SESSION_COOKIE_AGE = 1209600  # Durée de vie de la session en secondes (2 semaines)
+SESSION_SAVE_EVERY_REQUEST = True  # Sauvegarder la session à chaque requête
+
+# settings.py
+LOGIN_REDIRECT_URL = '/profile/'
+LOGOUT_REDIRECT_URL = '/'

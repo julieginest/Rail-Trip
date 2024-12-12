@@ -9,3 +9,6 @@ class RoadTrip(models.Model):
     nbjour = models.IntegerField()
     description = models.CharField(max_length=255) #TODO changer
     utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"RoadTrip {self.id} de {self.utilisateur.pseudo}"
