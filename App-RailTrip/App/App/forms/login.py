@@ -3,8 +3,8 @@ from ..models import Utilisateur
 from django.contrib.auth.hashers import check_password
 
 class LoginForm(forms.Form):
-    pseudo = forms.CharField(max_length=30)
-    mdp = forms.CharField(max_length=64, widget=forms.PasswordInput)
+    pseudo = forms.CharField(max_length=30, required=True, label="Nom d'utilisateur")
+    mdp = forms.CharField(max_length=64, widget=forms.PasswordInput, required=True, label="Mot de passe")
 
     def clean(self):
         cleaned_data = super().clean()
@@ -12,14 +12,14 @@ class LoginForm(forms.Form):
         mdp = cleaned_data.get("mdp")
 
         if not pseudo or not mdp:
-            raise forms.ValidationError("Vous n'avez pas rempli tous les champs.")
+            raise forms.ValidationError("Tous les champs sont obligatoires.")
 
         try:
             user = Utilisateur.objects.get(pseudo=pseudo)
             if not check_password(mdp, user.mdp):
-                raise forms.ValidationError("Le pseudo ou le mot de passe est incorrect")
+                raise forms.ValidationError("Le nom d'utilisateur ou le mot de passe est incorrect.")
         except Utilisateur.DoesNotExist:
-            raise forms.ValidationError("Le pseudo ou le mot de passe est incorrect")
+            raise forms.ValidationError("Le nom d'utilisateur ou le mot de passe est incorrect.")
 
         return cleaned_data
 

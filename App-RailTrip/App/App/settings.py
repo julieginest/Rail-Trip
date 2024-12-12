@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 import os
 
 # Récupération du .env
-load_dotenv("../../../.env")
+load_dotenv()
 
 DATABASE_ADRESS = os.getenv('DATABASE_ADRESS')
 DATABASE_PORT = os.getenv('DATABASE_PORT')
@@ -95,7 +95,7 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql',
         
-        'NAME': DATABASE_NAME or 'RailTrip',
+        'NAME': DATABASE_NAME or 'railtrip',
         'HOST': DATABASE_ADRESS or "localhost",
         'USER' : DATABASE_USER or "admin",
         'PASSWORD': DATABASE_PASSWORD or "admin",

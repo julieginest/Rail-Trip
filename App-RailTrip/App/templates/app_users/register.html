@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-register">
+    
+    <div class="form-container form-register">
+        <div class="logo">RailTrip</div>
+        <h2>Créer un compte</h2>
+        <div class="register-center">
+            <form method="post" id="registerForm">
+                {% if form.errors %}
+                    <div class="error-message" style="background-color: rgba(255, 0, 0, 0.1); padding: 15px; border-radius: 5px; color: #990000;">
+                        {% for field, errors in form.errors.items %}
+                            {% if field == '__all__' %}
+                                <p><strong>{{ errors|join:" " }}</strong></p>
+                            {% else %}
+                                <p><strong>{{ field|capfirst }} :</strong> {{ errors|join:" " }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        
+                    </div>
+                {% endif %}
+
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="pseudo" placeholder="Nom d'utilisateur" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="mdp" placeholder="••••••••" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password_confirm">Confirmer le mot de passe :</label>
+                    <input type="password" id="password_confirm" name="same_mdp" placeholder="••••••••" required>
+                </div>
+                
+                <div class="terms-checkbox">
+                    <label class="remember-me">
+                        <input type="checkbox" name="accept_terms" required>
+                        <span class="checkbox-condition">J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#" class="text-primary">politique de confidentialité</a> </span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="button">S'inscrire</button>
+            </form>
+        </div>
+
+        
+        <div class="register-section">
+            <p>
+                Déjà un compte ? <a href="{% url 'login' %}" class="register-link">Se connecter</a>
+            </p>
+        </div>
+
+    </div>
+
+    
+    {% endblock content %}
+</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('registerForm');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('password_confirm');
+            const termsCheckbox = form.querySelector('[name="terms"]');
+
+            form.addEventListener('submit', function (e) {
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    e.preventDefault();
+                    alert('Les mots de passe ne correspondent pas.');
+                }
+
+                if (!termsCheckbox.checked) {
+                    e.preventDefault();
+                    alert('Vous devez accepter les conditions générales d\'utilisation.');
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

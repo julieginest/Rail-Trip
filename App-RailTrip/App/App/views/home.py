@@ -5,7 +5,7 @@ from django import forms
 from django.http import JsonResponse
 from datetime import datetime
 from ..services import TransportService
-
+# from ...Prix.func import prix
 
 def get_fake_roadtrips(ville_depart=None, ville_arrivee=None, jour_depart=None):
     """
@@ -133,14 +133,21 @@ class HomeView(TemplateView):
                 stop=ville_arrivee,
                 journey_date=jour_depart
             )
-
+            
+            
             # Formatage des résultats de l'API
             trips = []
             if 'journeys' in api_response:
                 for journey in api_response['journeys']:
                     departure = datetime.strptime(journey['departure_date_time'], "%Y%m%dT%H%M%S")
                     arrival = datetime.strptime(journey['arrival_date_time'], "%Y%m%dT%H%M%S")
+                    
+                    # Extraction des informations nécessaires pour le prix
+                    #distance = journey.get('distance', 0) / 1000.0  # Convertir en km
+                    #network = journey.get('sections', [{}])[0].get('display_informations', {}).get('network', "Unknown")
 
+                    # # Calcul du prix en utilisant la fonction prix
+                    # price = prix(distance, departure, network)
                     trip = {
                         "name": f"Trajet {ville_depart} - {ville_arrivee}",
                         "start_location": ville_depart,
@@ -149,7 +156,9 @@ class HomeView(TemplateView):
                         "date": departure.strftime("%Y-%m-%d"),
                         "start_hour": departure.strftime("%H:%M"),
                         "end_hour": arrival.strftime("%H:%M"),
-                        "duration": self._format_duration(journey.get('duration', 0) // 60 )                   
+                        "duration": self._format_duration(journey.get('duration', 0) // 60 ), 
+                        #"price": f"{price}€",
+                        #"train_type": network              
                         }
                     trips.append(trip)
 

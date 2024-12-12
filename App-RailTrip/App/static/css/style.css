@@ -78,10 +78,14 @@ body {
     width: 60%;
 
     position: absolute;
-    bottom: 3rem;
+    bottom: 4rem;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
+}
+
+.search-grid{
+    width: 50vw;
 }
 
 .search-form label {
@@ -93,7 +97,6 @@ body {
     display: flex;
     justify-content: space-between; 
     gap: 2rem; 
-    width: 45rem;
 }
 
 .item-form {
@@ -110,13 +113,12 @@ body {
     align-items: flex-start; 
 }
 
-.form-group {
+.form-group-home {
     margin-bottom: 1rem; 
+    display: flex;
+    flex-direction: column;
 }
 
-.search-form {
-    width: 70%; 
-}
 
 .search-form input,
 .search-form select {
@@ -141,6 +143,8 @@ body {
 .search-form button:hover {
     background-color: #e39285b3;
 }
+
+
 
 /* Résultat de la recherche*/
 
@@ -312,5 +316,171 @@ body {
 
 .footer a:hover {
     text-decoration: underline;
+}
+
+/* ==================== LOGIN ==================== */
+
+.container-login,
+.container-register{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #E39185;
+}
+
+.logo{
+    font-family: "Lily Script One", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+}
+
+.form-container{
+    background-color: white;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 2rem;
+}
+
+.button{
+    background-color: #E39185;
+    border-radius: 2rem;
+    border: none;
+    color: white;
+    padding: 1rem;
+    width: 15vw;
+    font-size: 1rem;
+}
+
+.button:hover{
+    background-color: #e39285b3;
+    cursor: pointer;
+}
+
+.register-link{
+    text-decoration: none;
+    color: #E39185;
+    font-weight: 600;
+}
+
+.register-link:hover{
+    color: black;
+}
+/* ==================== REGISTER ==================== */
+
+.form-group{
+    margin-bottom: 1.2rem;
+    text-align: end;
+}
+
+.form-register{
+    width: 40vw;
+}
+
+.register-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group label{
+    font-weight: 700;
+}
+
+.form-group input{
+    width: 10rem;
+}
+
+.checkbox-condition{
+    font-size: 13px;
+}
+
+#registerForm button{
+    margin-top: 2rem;
+}
+
+.error-message {
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 5px;
+    color: #990000;
+    font-size: 14px;
+    margin-bottom: 2rem;
+}
+.error-message p {
+    margin: 0;
+}
+
+/* ==================== PROFILE ==================== */
+
+.profile-layout {
+    display: flex; /* Utilisation de flexbox */
+    height: 100vh; /* Prend toute la hauteur de l'écran */
+    overflow: hidden; /* Empêche le débordement */
+}
+
+.sidebar {
+    position: fixed; /* Fixée à gauche */
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #E39185;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.container-profile {
+    margin-left: 250px; 
+    padding: 0 5rem;
+    flex: 1; 
+    background-color: #EFEFEF;
+    overflow-y: auto; 
+}
+
+.profile-header h1 {
+    margin-bottom: 1rem;
+}
+
+.profile-content p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.menu li {
+    margin: 1rem 0;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.logo-menu{
+    color: white;
 }
 
