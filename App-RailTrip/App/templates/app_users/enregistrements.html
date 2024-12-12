@@ -3,8 +3,42 @@
 
 {% block content %}
 <div class="enregistrements-layout">
-    <h1>Mes enregistrements</h1>
-    <p>Bienvenue sur la page de vos enregistrements ! Ici, vous pouvez consulter tous vos roadtrips enregistrés.</p>
+    <div class="sidebar">
+        <ul class="menu">
+            <h2 class="logo logo-menu">RailTrip</h2>
+            <li><a href="{% url 'profile' %}"><i class="ri-user-line"></i> Mon profil</a></li>
+            <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
+            <li><a href=""><i class="ri-heart-line"></i> Mes favoris</a></li>
+            <li><a href=""><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
+            <li><a href="{% url 'logout' %}"><i class="ri-close-line"></i> Se déconnecter</a></li>
+        </ul>
+    </div>
+
+    <div class="container-profile">
+        <h1 class="text-center my-4">Mes Enregistrements</h1>
+
+        <div class="trajet-results">
+            {% for roadtrip in roadtrips %}
+            <div>
+                <img src="../../static/img/roadtrip.webp" alt="image roadtrip" class="img-roadtrip">
+                <div class="content-roadtrips">
+                    <h5 class="card-title">{{ roadtrip.etapes }}</h5>
+                    <p><strong>Départ :</strong> {{ roadtrip.depart }}</p>
+                    <p><strong>Durée :</strong> {{ roadtrip.nbjour }} jours</p>
+                    <p>{{ roadtrip.description }}</p>
+                    <form action="{% url 'delete_roadtrip' roadtrip.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="button-supprimer"><i class="ri-delete-bin-line"></i>Supprimer</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if not roadtrips %}
+        <p class="text-center my-4">Vous n'avez aucun roadtrip enregistré pour le moment.</p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
 

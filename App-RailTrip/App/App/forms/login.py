@@ -24,4 +24,10 @@ class LoginForm(forms.Form):
         return cleaned_data
 
     def get_user(self):
-        return Utilisateur.objects.get(pseudo=self.cleaned_data.get("pseudo"))
+        pseudo = self.cleaned_data.get("pseudo")
+        try:
+            # Recherchez l'utilisateur dans le modèle Utilisateur
+            user = Utilisateur.objects.get(pseudo=pseudo)
+            return user
+        except Utilisateur.DoesNotExist:
+            return None
