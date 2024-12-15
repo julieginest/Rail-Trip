@@ -520,3 +520,43 @@ body {
     cursor: pointer;
 }
 
+/* ==================== FAVORIS ==================== */
+
+
+.alert-success {
+    background-color: #28a745; /* Vert */
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #218838; /* Bordure plus foncée pour succès */
+}
+
+.alert-error {
+    background-color: #dc3545; /* Rouge */
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #c82333; /* Bordure plus foncée pour erreur */
+}
+
+.alert-info {
+    background-color: #17a2b8; /* Bleu clair */
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.alert-warning {
+    background-color: #ffc107; /* Jaune */
+    color: black;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}

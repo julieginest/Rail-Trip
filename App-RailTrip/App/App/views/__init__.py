@@ -6,3 +6,4 @@ from .logout import logout_view
 from .enregistrements import EnregistrementsView
 from .enregistrements import DeleteRoadTripView
 from .favoris import FavorisView
+from .favoris import SupprimerFavoriView

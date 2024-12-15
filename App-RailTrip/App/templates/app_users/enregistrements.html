@@ -8,7 +8,7 @@
             <h2 class="logo logo-menu">RailTrip</h2>
             <li><a href="{% url 'profile' %}"><i class="ri-user-line"></i> Mon profil</a></li>
             <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
-            <li><a href=""><i class="ri-heart-line"></i> Mes favoris</a></li>
+            <li><a href="{% url 'favoris' %}"><i class="ri-heart-line"></i> Mes favoris</a></li>
             <li><a href=""><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
             <li><a href="{% url 'logout' %}"><i class="ri-close-line"></i> Se déconnecter</a></li>
         </ul>
@@ -40,6 +40,6 @@
         {% endif %}
     </div>
 </div>
+{% include '../includes/footer.html' %}
 {% endblock %}
 
-{% include '../includes/footer.html' %}

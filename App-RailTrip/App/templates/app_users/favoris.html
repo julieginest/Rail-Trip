@@ -2,22 +2,63 @@
 {% load static %}
 
 {% block content %}
+
 <div class="enregistrements-layout">
     <div class="sidebar">
         <ul class="menu">
             <h2 class="logo logo-menu">RailTrip</h2>
+            <li><a href="{% url 'profile' %}"><i class="ri-user-line"></i> Mon profil</a></li>
             <li><a href="{% url 'enregistrements' %}"><i class="ri-user-line"></i> Mes enregistrements</a></li>
             <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
-            <li><a href=""><i class="ri-heart-line"></i> Mes favoris</a></li>
             <li><a href=""><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
             <li><a href="{% url 'logout' %}"><i class="ri-close-line"></i> Se déconnecter</a></li>
         </ul>
     </div>
 
     <div class="container-profile">
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         <h1 class="text-center my-4">Mes Favoris</h1>
+        <div class="trajet-results">
+            {% for roadtrip in roadtrips %}
+            <div>
+                <img src="../../static/img/roadtrip.webp" alt="image roadtrip" class="img-roadtrip">
+                <div class="content-roadtrips">
+                    <h5 class="card-title">{{ roadtrip.etapes }}</h5>
+                    <p><strong>Départ :</strong> {{ roadtrip.depart }}</p>
+                    <p><strong>Durée :</strong> {{ roadtrip.nbjour }} jours</p>
+                    <p>{{ roadtrip.description }}</p>
+                    <!-- Bouton pour supprimer le favori -->
+                    <form method="POST" action="{% url 'supprimer_favori' roadtrip.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button-supprimer">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteButtons = document.querySelectorAll("form .button-supprimer");
+        deleteButtons.forEach(button => {
+            button.addEventListener("click", function (event) {
+                if (!confirm("Voulez-vous vraiment supprimer ce favori ?")) {
+                    event.preventDefault();
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
 
 {% include '../includes/footer.html' %}
