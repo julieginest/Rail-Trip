@@ -2,6 +2,7 @@ from django.db import models
 from .roadtrip import RoadTrip
 from .user import Utilisateur
 
+
 class Reaction(models.Model):
     id = models.AutoField(primary_key=True)
     like = models.BooleanField(default=False)

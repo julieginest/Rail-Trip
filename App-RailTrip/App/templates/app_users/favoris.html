@@ -4,12 +4,18 @@
 {% block content %}
 
 <div class="enregistrements-layout">
+    <div class="div-menu-toggle">
+        <button onclick="toggleSidebar()" class="menu-toggle"><i class="ri-menu-line"></i></button>
+    </div>        
     <div class="sidebar">
         <ul class="menu">
+            <div class="close-menu">
+                <button onclick="toggleSidebar()" class=""><i class="ri-close-line"></i></button>
+            </div>
             <h2 class="logo logo-menu">RailTrip</h2>
-            <li><a href="{% url 'profile' %}"><i class="ri-user-line"></i> Mon profil</a></li>
-            <li><a href="{% url 'enregistrements' %}"><i class="ri-user-line"></i> Mes enregistrements</a></li>
+            <li><a href="{% url 'enregistrements' %}"><i class="ri-save-line"></i> Mes enregistrements</a></li>
             <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
+            <li><a href="{% url 'favoris' %}"><i class="ri-heart-line"></i> Mes favoris</a></li>
             <li><a href="{% url 'consulter' %}"><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
             <li><a href="{% url 'logout' %}"><i class="ri-close-line"></i> Se déconnecter</a></li>
         </ul>
@@ -25,7 +31,7 @@
             {% endfor %}
         </div>
         {% endif %}
-        <h1 class="text-center my-4">Mes Favoris</h1>
+        <h1 class="profile-title">Mes Favoris</h1>
         <div class="trajet-results">
             {% for roadtrip in roadtrips %}
             <div>
@@ -58,7 +64,11 @@
             });
         });
     });
+    function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('open');
+    }
 </script>
+{% include '../includes/footer.html' %}
 {% endblock %}
 
-{% include '../includes/footer.html' %}

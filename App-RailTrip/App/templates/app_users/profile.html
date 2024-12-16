@@ -4,8 +4,14 @@
 
 {% block content %}
 <div class="profile-layout">
+    <div class="div-menu-toggle">
+        <button onclick="toggleSidebar()" class="menu-toggle"><i class="ri-menu-line"></i></button>
+    </div>        
     <div class="sidebar">
         <ul class="menu">
+            <div class="close-menu">
+                <button onclick="toggleSidebar()" class=""><i class="ri-close-line"></i></button>
+            </div>
             <h2 class="logo logo-menu">RailTrip</h2>
             <li><a href="{% url 'enregistrements' %}"><i class="ri-save-line"></i> Mes enregistrements</a></li>
             <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
@@ -24,6 +30,12 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('open');
+}
+</script>
 
 {% include '../includes/footer.html' %}
 {% endblock %}
