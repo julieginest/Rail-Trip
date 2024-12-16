@@ -8,4 +8,5 @@ from .enregistrements import DeleteRoadTripView
 from .favoris import FavorisView
 from .favoris import SupprimerFavoriView
 from .consulter import ConsulterView
-from .consulter import AjouterFavoriViewfrom .follow import follow, unfollow
+from .consulter import AjouterFavoriView
+from .follow import follow, unfollow
