@@ -63,7 +63,7 @@ def Reach(start, stop, date=date.today(), dateUse='departure'):
     if response.status_code == 200:
         return json.loads(response.text)
     else:
-        raise Exception(f"Erreur API : {response.status_code} - {response.text}")
+        raise Exception(f"Erreur API (from API): {response.status_code} - {response.text}")
 
 
 # Génération du lien
