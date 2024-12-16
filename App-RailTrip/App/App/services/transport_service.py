@@ -1,6 +1,7 @@
 import os
 from django.conf import settings
 from datetime import date
+from Prix.func import prix
 import requests
 import urllib.parse as url
 import json
@@ -71,7 +72,7 @@ class TransportService:
                 return json.loads(response.text)
             else:
                 print(f"Réponse de l'API: {response.text}")
-                raise Exception(f"Erreur API: {response.status_code}")
+                raise Exception(f"Erreur API (from transport_service): {response.status_code}")
 
         except Exception as e:
             raise Exception(f"Erreur lors de la recherche du trajet: {str(e)}")
@@ -124,6 +125,10 @@ class TransportService:
                     duration_str = f"{hours}h{minutes:02d}"
                 else:
                     duration_str = f"{duration_minutes}min"
+                price = 0
+                for p in journey["sections"]:
+                    if (p["type"] == "public_transport"):
+                        price += prix(p["geojson"]["properties"][0]["length"] / 1000, p["departure_date_time"], p["display_informations"]["network"])
 
                 formatted_journey = {
                     "name": f"Trajet {start_name} - {stop_name}",
@@ -136,7 +141,7 @@ class TransportService:
                                                                                    11:13],
                     "duration": duration_str,  # Format modifié
                     "train_type": first_section.get('display_informations', {}).get('commercial_mode', 'Train'),
-                    "price": "Prix non disponible",
+                    "price": price,
                     "description": self._build_journey_description(train_sections)
                 }
                 journeys.append(formatted_journey)
@@ -155,3 +160,5 @@ class TransportService:
             descriptions.append(f"{train_type} {train_name}")
 
         return " → ".join(descriptions) if descriptions else "Trajet direct"
+    
+

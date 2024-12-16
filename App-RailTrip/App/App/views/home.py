@@ -5,6 +5,8 @@ from django import forms
 from django.http import JsonResponse
 from datetime import datetime
 from ..services import TransportService
+from Prix.func import prix
+
 # from ...Prix.func import prix
 
 def get_fake_roadtrips(ville_depart=None, ville_arrivee=None, jour_depart=None):
@@ -147,7 +149,12 @@ class HomeView(TemplateView):
                     #network = journey.get('sections', [{}])[0].get('display_informations', {}).get('network', "Unknown")
 
                     # # Calcul du prix en utilisant la fonction prix
-                    # price = prix(distance, departure, network)
+                    price = 0
+                    for p in journey["sections"]:
+                        if (p["type"] == "public_transport"):
+                            price = price + prix(p["geojson"]["properties"][0]["length"] / 1000, p["departure_date_time"], p["display_informations"]["network"])
+
+                    
                     trip = {
                         "name": f"Trajet {ville_depart} - {ville_arrivee}",
                         "start_location": ville_depart,
@@ -157,14 +164,14 @@ class HomeView(TemplateView):
                         "start_hour": departure.strftime("%H:%M"),
                         "end_hour": arrival.strftime("%H:%M"),
                         "duration": self._format_duration(journey.get('duration', 0) // 60 ), 
-                        #"price": f"{price}€",
+                        "price": round(price,2) ,
                         #"train_type": network              
                         }
                     trips.append(trip)
 
             return trips
         except Exception as e:
-            print(f"Erreur API: {str(e)}")
+            print(f"Erreur API (from home): {str(e)}")
             # En cas d'erreur, on retourne les trajets fictifs
             return get_fake_roadtrips(ville_depart, ville_arrivee, jour_depart)
         
