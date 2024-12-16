@@ -1,6 +1,6 @@
 from scipy.interpolate import PchipInterpolator
 import numpy as np
-import datetime
+from datetime import datetime
 import math
 
 # Définition de la fonction
@@ -102,7 +102,12 @@ def nwPrice(network):
     return 0.2
 
 def prix(distance, dateTime, network):
-    timeFloat = dateTime.hour + dateTime.minute / 60
+    timeFloat = 0
+    try:
+        timeFloat = dateTime.hour + dateTime.minute / 60
+    except:
+        dateTime = datetime.strptime(dateTime,"%Y%m%dT%H%M%S")
+        timeFloat = dateTime.hour + dateTime.minute / 60
     coefHeure = multiplicatHeure(timeFloat)
     idfm = [
         "RER",
@@ -116,8 +121,9 @@ def prix(distance, dateTime, network):
         
         price = (coefHeure * distance * kmPrice)/math.exp(distance / 1000)
         roundedPrice = round(price,2)
+    print(roundedPrice)
     return roundedPrice
 
 ## TEST ##
 # print(prix(250,datetime.datetime(2024,2,2,2,2), "TGV INOUI"))
-## #### ##
+## #### ##20241222T144900
