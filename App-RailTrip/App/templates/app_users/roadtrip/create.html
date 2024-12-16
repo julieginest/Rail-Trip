@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'roadtrip/style.css' %}">
+
+<div class="profile-layout">
+    <div class="div-menu-toggle">
+        <button onclick="toggleSidebar()" class="menu-toggle"><i class="ri-menu-line"></i></button>
+    </div>        
+    <div class="sidebar">
+        <ul class="menu">
+            <div class="close-menu">
+                <button onclick="toggleSidebar()"><i class="ri-close-line"></i></button>
+            </div>
+            <h2 class="logo logo-menu">RailTrip</h2>
+            <li><a href="{% url 'enregistrements' %}"><i class="ri-save-line"></i> Mes enregistrements</a></li>
+            <li><a href="{% url 'roadtrip' %}"><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
+            <li><a href="{% url 'favoris' %}"><i class="ri-heart-line"></i> Mes favoris</a></li>
+            <li><a href="{% url 'consulter' %}"><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
+            <li><a href="{% url 'logout' %}"><i class="ri-close-line"></i> Se déconnecter</a></li>
+        </ul>
+    </div>
+
+    <div class="container-profile">
+        <div class="profile-header">
+            <h1>Créer votre Roadtrip</h1>
+        </div>
+        <div class="roadtrip-form-container">
+            <form method="POST" class="roadtrip-form">
+                {% csrf_token %}
+
+                <div class="etapes-container">
+                    <div class="etape-group">
+                        <h3>Étape 1</h3>
+                        <select name="etape1" required>
+                            <option value="">Sélectionnez une ville</option>
+                            <option value="paris">Paris</option>
+                            <option value="lyon">Lyon</option>
+                            <option value="marseille">Marseille</option>
+                            <option value="bordeaux">Bordeaux</option>
+                            <option value="lille">Lille</option>
+                            <option value="toulouse">Toulouse</option>
+                            <option value="nantes">Nantes</option>
+                            <option value="strasbourg">Strasbourg</option>
+                        </select>
+                    </div>
+
+                    <div class="etape-group">
+                        <h3>Étape 2</h3>
+                        <select name="etape2" required>
+                            <option value="">Sélectionnez une ville</option>
+                            <option value="paris">Paris</option>
+                            <option value="lyon">Lyon</option>
+                            <option value="marseille">Marseille</option>
+                            <option value="bordeaux">Bordeaux</option>
+                            <option value="lille">Lille</option>
+                            <option value="toulouse">Toulouse</option>
+                            <option value="nantes">Nantes</option>
+                            <option value="strasbourg">Strasbourg</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group-roadtrip date-group">
+                    <label for="{{ form.depart.id_for_label }}">Date de départ</label>
+                    <input type="date" 
+                           id="{{ form.depart.id_for_label }}" 
+                           name="{{ form.depart.name }}"
+                           class="date-input"
+                           min="{% now 'Y-m-d' %}"
+                           required>
+                    {% if form.depart.errors %}
+                        <div class="error">{{ form.depart.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group-roadtrip">
+                    <label for="{{ form.nbjour.id_for_label }}">Nombre de jours</label>
+                    {{ form.nbjour }}
+                    {% if form.nbjour.errors %}
+                        <div class="error">{{ form.nbjour.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group-roadtrip">
+                    <label for="{{ form.description.id_for_label }}">Description du voyage</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="error">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group-roadtrip">
+                    <label class="checkbox-label">
+                        {{ form.publique }}
+                        Rendre ce roadtrip public
+                    </label>
+                    {% if form.publique.errors %}
+                        <div class="error">{{ form.publique.errors }}</div>
+                    {% endif %}
+                </div>
+
+                {% if form.non_field_errors %}
+                    <div class="error">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <button type="submit" class="button-roadtrip">Créer le Roadtrip</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% comment %} {% include '../includes/footer.html' %} {% endcomment %}
+{% endblock %}

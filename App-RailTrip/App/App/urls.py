@@ -16,7 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import HomeView, LoginView, RegisterView, ProfileView, logout_view, EnregistrementsView, DeleteRoadTripView, FavorisView, SupprimerFavoriView, ConsulterView, AjouterFavoriView, follow, unfollow
+from .views import (
+    HomeView, 
+    LoginView, 
+    RegisterView, 
+    ProfileView, 
+    logout_view, 
+    EnregistrementsView, 
+    DeleteRoadTripView, 
+    FavorisView, 
+    SupprimerFavoriView, 
+    ConsulterView, 
+    AjouterFavoriView, 
+    follow, 
+    unfollow,
+    RoadTripCreateView
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +41,7 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name="profile"),
     path('logout/', logout_view , name='logout'),
     path('enregistrements/', EnregistrementsView.as_view(), name='enregistrements'),
+    path('roadtrip/create/', RoadTripCreateView.as_view(), name='roadtrip'),
     path('roadtrip/delete/<int:roadtrip_id>/', DeleteRoadTripView.as_view(), name='delete_roadtrip'),
     path('favoris/', FavorisView.as_view(), name='favoris'),
     path('favoris/supprimer/<int:roadtrip_id>/', SupprimerFavoriView.as_view(), name='supprimer_favori'),

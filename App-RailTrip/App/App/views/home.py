@@ -75,8 +75,7 @@ class HomeView(TemplateView):
             return trips
         except Exception as e:
             print(f"Erreur API (from home): {str(e)}")
-            # En cas d'erreur, on retourne les trajets fictifs
-            return get_fake_roadtrips(ville_depart, ville_arrivee, jour_depart)
+            return False
         
     def _format_duration(self, duration_minutes):
         if duration_minutes <= 0:

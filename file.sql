@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `app_reaction` (
 -- Listage de la structure de la table railtrip. app_roadtrip
 CREATE TABLE IF NOT EXISTS `app_roadtrip` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(100) NOT NULL,
   `publique` tinyint(1) NOT NULL,
   `etapes` varchar(255) NOT NULL,
   `depart` date NOT NULL,
