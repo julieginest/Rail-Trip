@@ -26,23 +26,31 @@ class RegisterForm(forms.ModelForm):
         mdp = cleaned_data.get('mdp')
         same_mdp = cleaned_data.get('same_mdp')
 
-        # Validation de base
+
+        # The user didn't fill all the fields
         if not pseudo or not mdp or not same_mdp:
             raise forms.ValidationError("Tous les champs sont obligatoires.")
 
+        # Password and confirm password are not the same
         if mdp != same_mdp:
             raise forms.ValidationError("Les mots de passe ne correspondent pas.")
 
-        # Vérification du pseudo
+        # We're checking if the user is already existing
         if Utilisateur.objects.filter(pseudo=pseudo).exists():
             raise forms.ValidationError("Ce pseudo est déjà utilisé.")
+        
+        #TODO: check if the user/password doesn't contain some characters used for sql injection
 
         return cleaned_data
 
     def save(self, commit=True):
         pseudo = self.cleaned_data["pseudo"]
-        mdp = make_password(self.cleaned_data["mdp"])  # Hashage du mot de passe
-        user = Utilisateur(pseudo=pseudo, mdp=mdp)
+        base_mdp = self.cleaned_data["mdp"]
+        if not pseudo or base_mdp:
+            return
+        
+        hashed_password = make_password(base_mdp) # Hashing the password so we can't know his password
+        user = Utilisateur(pseudo=pseudo, mdp=hashed_password)
         if commit:
             user.save()
         return user
