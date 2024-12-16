@@ -6,6 +6,14 @@ from django.http import JsonResponse
 from datetime import datetime
 from ..services import TransportService
 from Prix.func import prix
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+def logout(request):
+    if 'user_id' in request.session:
+        del request.session['user_id']
+    messages.success(request, "Vous avez était déconnecté avec succès.")
+    return redirect("login")
 
 # from ...Prix.func import prix
 

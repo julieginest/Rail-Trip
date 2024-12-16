@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+
 # Rail-Trip
 
 ## Variables d'environement:
@@ -21,4 +23,9 @@
 │
 ├─ README.md       --Ce fichier--
 └─ .env            --Ficher des variables d'environment--
+```
+
+```python
+@login_required Force l'utilisateur à être login pour accéder à telle chose
+@require_POST # Faire en sorte que la view ne fait que une requête POST
 ```

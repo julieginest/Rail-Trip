@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import HomeView, LoginView, RegisterView, ProfileView, logout_view
+from .views import HomeView, LoginView, RegisterView, ProfileView, logout_view, follow, unfollow
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +26,6 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name="profile"),
     path('logout/', logout_view, name='logout'),
 
+    path('follow/<int:utilisateur_id>/', follow, name='follow'),
+    path('unfollow/<int:utilisateur_id>/', unfollow, name='unfollow'),
 ]

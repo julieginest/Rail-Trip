@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RailTrip - Votre Compagnon de Voyage{% endblock %}</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent-color: #22c55e;
+            --error-color: #dc2626;
+            --text-color: #1f2937;
+            --text-muted: #6b7280;
+            --background-color: #f3f4f6;
+            --card-background: #ffffff;
+            --input-border: #e5e7eb;
+            --input-focus: rgba(37, 99, 235, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            background-image: 
+                linear-gradient(rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.1)),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%232563eb' fill-opacity='0.05' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            margin: 20px;
+            background-color: var(--card-background);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        h2 {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .form-container {
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--input-border);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            background-color: white;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px var(--input-focus);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 2.5rem;
+            color: var(--text-muted);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid var(--input-border);
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .login-btn {
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .social-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .social-login-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .social-login-text::before,
+        .social-login-text::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 35%;
+            height: 1px;
+            background-color: var(--input-border);
+        }
+
+        .social-login-text::before {
+            left: 0;
+        }
+
+        .social-login-text::after {
+            right: 0;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .social-btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--input-border);
+            border-radius: 0.75rem;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .social-btn:hover {
+            background-color: var(--background-color);
+        }
+
+        .register-link {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+
+        .shake {
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        
+           .social-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        border: 1px solid var(--input-border);
+        border-radius: 0.75rem;
+        background-color: white;
+        color: var(--text-color);
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .social-btn:hover {
+        background-color: var(--background-color);
+        transform: translateY(-1px);
+    }
+
+    .social-btn:active {
+        transform: translateY(0);
+    }
+
+    .google-btn:hover {
+        background-color: rgba(219, 68, 55, 0.1);
+    }
+
+    .facebook-btn:hover {
+        background-color: rgba(24, 119, 242, 0.1);
+    }
+
+    .apple-btn:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Animations de validation */
+    .form-group.success input {
+        border-color: var(--accent-color);
+    }
+
+    .form-group.error input {
+        border-color: var(--error-color);
+    }
+
+    /* Indicateur de force du mot de passe */
+    .password-strength {
+        height: 4px;
+        background-color: var(--input-border);
+        border-radius: 2px;
+        margin-top: 0.5rem;
+    }
+
+    .password-strength-bar {
+        height: 100%;
+        width: 0;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .strength-weak { 
+        background-color: #ef4444;
+        width: 33%;
+    }
+
+    .strength-medium {
+        background-color: #f59e0b;
+        width: 66%;
+    }
+
+    .strength-strong {
+        background-color: #10b981;
+        width: 100%;
+    }
+
+    /* Style pour les tooltips */
+    .tooltip {
+        position: absolute;
+        background-color: var(--text-color);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        z-index: 10;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .tooltip.visible {
+        opacity: 1;
+    }
+
+    /* Loading spinner pour le bouton de connexion */
+    .loading-spinner {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+        margin-left: 0.5rem;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    /* Ajoutez ces styles à la fin de votre section CSS */
+
+/* Tablettes et petits écrans (768px et moins) */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        margin: 1rem;
+        padding: 2rem;
+    }
+
+    .logo {
+        font-size: 2rem;
+    }
+
+    .social-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .social-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Mobiles (480px et moins) */
+@media (max-width: 480px) {
+    .container {
+        margin: 0.5rem;
+        padding: 1.5rem;
+        border-radius: 1rem;
+    }
+
+    .header {
+        margin-bottom: 2rem;
+    }
+
+    .logo {
+        font-size: 1.75rem;
+    }
+
+    .logo-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .tagline {
+        font-size: 0.75rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-group input {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .remember-forgot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .social-login-text::before,
+    .social-login-text::after {
+        width: 30%;
+    }
+
+    .social-buttons {
+        gap: 0.5rem;
+    }
+
+    .social-btn {
+        padding: 0.625rem 1rem;
+        font-size: 0.8125rem;
+    }
+
+    .social-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Très petits écrans (320px et moins) */
+@media (max-width: 320px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .header {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        font-size: 0.75rem;
+    }
+
+    .form-group input {
+        padding: 0.625rem;
+        font-size: 0.8125rem;
+    }
+
+    .remember-me {
+        font-size: 0.75rem;
+    }
+
+    .social-login-text::before,
+    .social-login-text::after {
+        width: 25%;
+    }
+}
+
+/* Support des écrans haute résolution */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .container {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+}
+
+/* Support du mode sombre */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #111827;
+        --card-background: #1F2937;
+        --text-color: #F9FAFB;
+        --text-muted: #9CA3AF;
+        --input-border: #374151;
+        --input-focus: rgba(37, 99, 235, 0.2);
+    }
+
+    body {
+        background-image: 
+            linear-gradient(rgba(37, 99, 235, 0.05), rgba(37, 99, 235, 0.05)),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%232563eb' fill-opacity='0.03' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    .form-group input {
+        background-color: var(--card-background);
+        color: var(--text-color);
+    }
+
+    .social-btn {
+        background-color: var(--card-background);
+        border-color: var(--input-border);
+        color: var(--text-color);
+    }
+
+    .social-btn:hover {
+        background-color: var(--input-border);
+    }
+}
+
+/* Support de la réduction des animations */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 15L20 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 9L20 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 3L14 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="logo">RailTrip</div>
+            <div class="tagline">Votre compagnon de voyage ferroviaire</div>
+        </div>
+
+        {% block content %}
+        <div class="form-container">
+            <h2>Créer un compte</h2>
+            <form method="post" id="registerForm">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="firstname">Prénom</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="Jean" required>
+                    <span class="input-icon">👤</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastname">Nom</label>
+                    <input type="text" id="lastname" name="lastname" placeholder="Dupont" required>
+                    <span class="input-icon">👤</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" name="username" placeholder="jean.dupont" required>
+                    <span class="input-icon">🎯</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Adresse e-mail</label>
+                    <input type="email" id="email" name="email" placeholder="jean.dupont@example.com" required>
+                    <span class="input-icon">✉️</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    <span class="input-icon">🔒</span>
+                    <div class="password-strength">
+                        <div class="password-strength-bar"></div>
+                    </div>
+                    <small class="password-requirements">
+                        Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password_confirm">Confirmer le mot de passe</label>
+                    <input type="password" id="password_confirm" name="password_confirm" placeholder="••••••••" required>
+                    <span class="input-icon">🔒</span>
+                </div>
+
+                <div class="terms-checkbox">
+                    <label class="remember-me">
+                        <input type="checkbox" name="terms" required>
+                        <span>J'accepte les <a href="#" class="text-primary">conditions d'utilisation</a> et la <a href="#" class="text-primary">politique de confidentialité</a></span>
+                    </label>
+                </div>
+
+                <div class="newsletter-checkbox">
+                    <label class="remember-me">
+                        <input type="checkbox" name="newsletter">
+                        <span>Je souhaite recevoir les actualités et les offres de RailTrip par email</span>
+                    </label>
+                </div>
+
+                {% if form.errors %}
+                <div class="error-message">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 14A6 6 0 108 2a6 6 0 000 12zM8 5v4M8 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn login-btn">
+                    <span>Créer mon compte</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </form>
+
+            <div class="social-login">
+                <div class="social-login-text">Ou s'inscrire avec</div>
+                <div class="social-buttons">
+                    <button type="button" class="social-btn google-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M12.545,12.151L12.545,12.151c0,1.054,0.855,1.909,1.909,1.909h3.536c-0.229,1.205-0.999,2.178-2.063,2.616c-0.612,0.253-1.287,0.39-1.991,0.39c-2.225,0-4.127-1.442-4.8-3.44c-0.228-0.677-0.35-1.397-0.35-2.14c0-0.742,0.121-1.462,0.349-2.139c0.192-0.577,0.478-1.11,0.849-1.584c0.849-1.09,2.172-1.792,3.663-1.792c1.534,0,2.891,0.738,3.738,1.87l2.628-2.628c-1.564-1.564-3.722-2.532-6.104-2.532c-4.762,0-8.622,3.86-8.622,8.622s3.86,8.622,8.622,8.622c2.383,0,4.541-0.969,6.104-2.532c1.563-1.564,2.532-3.722,2.532-6.104v-1.909H14.454C13.4,12.151,12.545,13.006,12.545,12.151z" fill="#DB4437"/>
+                        </svg>
+                        <span>Google</span>
+                    </button>
+                    
+                    <button type="button" class="social-btn facebook-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M20.9,2H3.1C2.5,2,2,2.5,2,3.1v17.8C2,21.5,2.5,22,3.1,22h9.6v-7.7h-2.6v-3h2.6V9.2c0-2.6,1.6-4,3.9-4c1.1,0,2.1,0.1,2.3,0.1v2.7l-1.6,0c-1.3,0-1.5,0.6-1.5,1.5v1.9h3l-0.4,3h-2.6V22h5.1c0.6,0,1.1-0.5,1.1-1.1V3.1C22,2.5,21.5,2,20.9,2z" fill="#1877F2"/>
+                        </svg>
+                        <span>Facebook</span>
+                    </button>
+                    
+                    <button type="button" class="social-btn apple-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M17.2,12.1c0-2.7,2.2-4,2.3-4.1c-1.3-1.8-3.2-2.1-3.9-2.1c-1.7-0.2-3.3,1-4.1,1c-0.9,0-2.2-1-3.6-1c-1.9,0-3.6,1.1-4.5,2.7c-1.9,3.3-0.5,8.3,1.4,11c0.9,1.3,2,2.8,3.4,2.7c1.4-0.1,1.9-0.9,3.6-0.9c1.7,0,2.1,0.9,3.6,0.9c1.5,0,2.4-1.3,3.3-2.7c1-1.5,1.4-3,1.5-3.1C19.9,16.5,17.2,15.3,17.2,12.1z M14.8,6.9c0.7-0.9,1.3-2.1,1.1-3.3c-1.1,0-2.4,0.7-3.2,1.6c-0.7,0.8-1.3,2.1-1.1,3.3C12.7,8.6,14,7.8,14.8,6.9z" fill="#000000"/>
+                        </svg>
+                        <span>Apple</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="register-section">
+                <p class="register-link">
+                    Déjà un compte ? <a href="{% url 'login' %}">Se connecter</a>
+                </p>
+            </div>
+        </div>
+        {% endblock content %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registerForm');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('password_confirm');
+            const strengthBar = document.querySelector('.password-strength-bar');
+
+            // Validation du mot de passe
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                if(password.length >= 8) strength++;
+                if(/[A-Z]/.test(password)) strength++;
+                if(/[0-9]/.test(password)) strength++;
+                if(/[^A-Za-z0-9]/.test(password)) strength++;
+
+                strengthBar.className = 'password-strength-bar';
+                
+                if(strength >= 4) {
+                    strengthBar.classList.add('strength-strong');
+                } else if(strength >= 2) {
+                    strengthBar.classList.add('strength-medium');
+                } else {
+                    strengthBar.classList.add('strength-weak');
+                }
+            });
+
+            // Validation du formulaire
+            form.addEventListener('submit', function(e) {
+                if(passwordInput.value !== confirmPasswordInput.value) {
+                    e.preventDefault();
+                    alert('Les mots de passe ne correspondent pas');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
