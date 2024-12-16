@@ -7,3 +7,5 @@ from .enregistrements import EnregistrementsView
 from .enregistrements import DeleteRoadTripView
 from .favoris import FavorisView
 from .favoris import SupprimerFavoriView
+from .consulter import ConsulterView
+from .consulter import AjouterFavoriView

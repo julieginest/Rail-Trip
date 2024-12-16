@@ -1,26 +1,26 @@
 -- Insérer des utilisateurs dans `app_utilisateur`
-INSERT INTO `app_utilisateur` (`id`, `mdp`, `pseudo`) VALUES
-(4, MD5('password123'), 'john_doe'),
-(2, MD5('password456'), 'jane_smith'),
-(3, MD5('password789'), 'mark_brown');
+INSERT INTO `app_utilisateur` (`mdp`, `pseudo`) VALUES
+(MD5('password123'), 'john_doe'),
+(MD5('password456'), 'jane_smith'),
+(MD5('password789'), 'mark_brown');
 
 -- Insérer des roadtrips dans `app_roadtrip`
-INSERT INTO `app_roadtrip` (`id`, `publique`, `etapes`, `depart`, `nbjour`, `description`, `utilisateur_id`) VALUES
-(1, 1, 'Bordeaux-Lyon-Marseille', '2024-12-22', 10, 'Découverte des grandes villes françaises', 1),
-(2, 0, 'Lyon-Marseille-Amiens', '2025-01-02', 7, 'Découvrir la diversité des paysages et des cultures françaises à travers un roadtrip captivant reliant Lyon, Marseille et Amiens. Une aventure de 7 jours riche en découvertes culturelles, culinaires et naturelles', 2),
-(3, 1, 'Toulouse-Montpellier-Nimes', '2025-01-01', 5, 'Roadtrip en bord de mer', 3);
+INSERT INTO `app_roadtrip` (`publique`, `etapes`, `depart`, `nbjour`, `description`, `utilisateur_id`) VALUES
+(1, 'Bordeaux-Lyon-Marseille', '2024-12-22', 10, 'Découverte des grandes villes françaises', 1),
+(0, 'Lyon-Marseille-Amiens', '2025-01-02', 7, 'Découvrir la diversité des paysages et des cultures françaises à travers un roadtrip captivant reliant Lyon, Marseille et Amiens. Une aventure de 7 jours riche en découvertes culturelles, culinaires et naturelles', 2),
+(1, 'Toulouse-Montpellier-Nimes', '2025-01-01', 5, 'Roadtrip en bord de mer', 3);
 
 -- Insérer des favoris dans `app_favori`
-INSERT INTO `app_favori` (`id`, `roadtrip_id`, `utilisateur_id`) VALUES
-(1, 1, 2),
-(2, 3, 1),
-(3, 2, 3);
+INSERT INTO `app_favori` (`roadtrip_id`, `utilisateur_id`) VALUES
+(1, 2),
+(3, 1),
+(2, 3);
 
 -- Insérer des réactions dans `app_reaction`
-INSERT INTO `app_reaction` (`id`, `like`, `roadtrip_id`, `utilisateur_id`) VALUES
-(1, 1, 1, 2),
-(2, 0, 2, 1),
-(3, 1, 3, 3);
+INSERT INTO `app_reaction` (`like`, `roadtrip_id`, `utilisateur_id`) VALUES
+(1, 1, 2),
+(0, 2, 1),
+(1, 3, 3);
 
 -- Insérer des groupes dans `auth_group`
 INSERT INTO `auth_group` (`id`, `name`) VALUES
