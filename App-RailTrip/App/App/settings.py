@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from django.contrib.messages import constants as message_constants
 
 # Récupération du .env
 load_dotenv()
@@ -63,7 +64,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'App.middleware.AuthMiddleware'
 ]
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'debug',
+    message_constants.INFO: 'info',
+    message_constants.SUCCESS: 'success',
+    message_constants.WARNING: 'warning',
+    message_constants.ERROR: 'danger',
+}
 #LOGIN_URL = "/login"
 #LOGIN_REDIRECT_URL = "/"
 ROOT_URLCONF = 'App.urls'
@@ -153,3 +162,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = 'login'
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Utiliser la base de données pour les sessions
+SESSION_COOKIE_AGE = 1209600  # Durée de vie de la session en secondes (2 semaines)
+SESSION_SAVE_EVERY_REQUEST = True  # Sauvegarder la session à chaque requête
+
+# settings.py
+LOGIN_REDIRECT_URL = '/profile/'
+LOGOUT_REDIRECT_URL = '/'

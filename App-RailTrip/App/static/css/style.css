@@ -484,3 +484,225 @@ body {
     color: white;
 }
 
+/* ==================== ENREGISTREMENTS ==================== */
+
+.card-body{
+    width: 30%;
+    display: block;
+}
+
+.img-roadtrip{
+    width: 100%;
+    border-radius: 4rem 4rem 0 0;
+}
+
+.content-roadtrips{
+    background-color: #E39185;
+    padding: 0.5rem 1rem 1rem 1rem;
+    border-radius: 0 0 4rem 4rem;
+    color: white;
+}
+
+.card-title{
+    font-size: 2rem;
+    margin: 0;
+}
+
+.button-supprimer{
+    padding: 0.6rem;
+    background-color: white;
+    border: none;
+    border-radius: 5rem;
+}
+
+.button-supprimer:hover{
+    background-color: #D9D9D9;
+    cursor: pointer;
+}
+
+/* ==================== FAVORIS ==================== */
+
+
+.alert-success {
+    background-color: #28a745; /* Vert */
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #218838; /* Bordure plus foncée pour succès */
+}
+
+.alert-error {
+    background-color: #dc3545; /* Rouge */
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #c82333; /* Bordure plus foncée pour erreur */
+}
+
+.alert-info {
+    background-color: #17a2b8; /* Bleu clair */
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.alert-warning {
+    background-color: #ffc107; /* Jaune */
+    color: black;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.close-menu{
+    display: none;
+}
+
+
+/* Mobile (écrans plus petits que 768px) */
+@media (max-width: 768px) {
+
+    .menu-toggle{
+        font-size: 2rem;
+        color: #E39185;
+        position: relative;
+        top: 1.5rem;
+        left: 1.5rem;
+        border-color: transparent;
+    }
+
+    .sidebar{
+        display: none;
+    }
+
+    .container-profile{
+        margin-left: 0;
+    }
+
+    .open{
+        display: block;
+    }
+
+    .close-menu{
+        display: block;
+        color: white;
+        font-size: 2.5rem;
+        text-align: right;
+    }
+    .close-menu button{
+        border-color: transparent;
+        background-color: transparent;
+        color: white;
+        font-size: 2.5rem;
+    }
+
+    .profile-title{
+        font-size: 1.5rem;
+    }
+
+    .trajet-results {
+        display: block; /* Les éléments se placent les uns en dessous des autres */
+    }
+
+    .trajet-results > div {
+        margin-bottom: 20px; /* Un peu d'espace entre les éléments */
+    }
+
+    .card-title{
+        font-size: 1.2rem;
+    }
+
+    .home-title{
+        font-size: 3rem;
+        top: 15%;
+    }
+
+    .home-subtitle{
+        font-size: 1rem;
+        top: 20%;
+    }
+
+    .img-accueil{
+        height: 40%;
+    }
+
+    .user-login{
+        right: 5%;
+    }
+
+    .over-img{
+        height: 40%;
+    }
+
+    .search-form{
+        bottom: -15rem;  
+    }
+
+    .search-grid {
+        flex-direction: column;
+    }
+
+    .items-forms {
+        flex-direction: column;
+    }
+
+    .search-button {
+        margin-top: 10px;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .results-container{
+        margin-top: 28rem;
+    }
+
+    .form-container{
+        padding: 5px;
+    }
+
+    .button{
+        width: max-content;
+    }
+
+    .register-form{
+        width: 60vw;
+        padding: 0;
+    }
+
+    .register-form h2{
+        font-size: 1.2rem;
+    }
+
+    .form-group{
+        margin-right: 1rem;
+    }
+
+    .form-group label{
+        font-size: 0.8rem;
+    }
+
+    .form-group input{
+        margin-top: 0.5rem;
+    }
+
+    .profile-header h1{
+        font-size: 0.8rem;
+        width: 100%;
+    }
+
+    .profile-content p{
+        font-size: 0.7rem;
+    }
+
+    .container-profile{
+        margin-top: 2rem;
+    }
+}
+

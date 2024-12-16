@@ -1,9 +1,8 @@
-<!-- home.html -->
 {% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
-<div class="profile-layout">
+<div class="enregistrements-layout">
     <div class="div-menu-toggle">
         <button onclick="toggleSidebar()" class="menu-toggle"><i class="ri-menu-line"></i></button>
     </div>        
@@ -22,12 +21,29 @@
     </div>
 
     <div class="container-profile">
-        <div class="profile-header">
-            <h1>Bienvenue, {{ pseudo }} !</h1>
+        <h1 class="profile-title">Mes Enregistrements</h1>
+
+        <div class="trajet-results">
+            {% for roadtrip in roadtrips %}
+            <div>
+                <img src="../../static/img/roadtrip.webp" alt="image roadtrip" class="img-roadtrip">
+                <div class="content-roadtrips">
+                    <h5 class="card-title">{{ roadtrip.etapes }}</h5>
+                    <p><strong>Départ :</strong> {{ roadtrip.depart }}</p>
+                    <p><strong>Durée :</strong> {{ roadtrip.nbjour }} jours</p>
+                    <p>{{ roadtrip.description }}</p>
+                    <form action="{% url 'delete_roadtrip' roadtrip.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="button-supprimer"><i class="ri-delete-bin-line"></i>Supprimer</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        <div class="profile-content">
-            <p>Vous êtes connecté sur RailTrip. Profitez de votre expérience !</p>
-        </div>
+
+        {% if not roadtrips %}
+        <p class="text-center my-4">Vous n'avez aucun roadtrip enregistré pour le moment.</p>
+        {% endif %}
     </div>
 </div>
 <script>
@@ -36,6 +52,6 @@
     sidebar.classList.toggle('open');
 }
 </script>
-
 {% include '../includes/footer.html' %}
 {% endblock %}
+
