@@ -1,4 +1,4 @@
-.env
+/.env
 App-RailTrip/Lib/*
 App-RailTrip/pyvenv.cf
 App-RailTrip/pyvenv.cfg
