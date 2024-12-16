@@ -19,7 +19,8 @@ https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.min.css
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}RailTrip{% endblock %}</title>
-    <style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <!-- <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -59,7 +60,7 @@ https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.min.css
         .logout-btn:hover {
             background-color: #c9302c;
         }
-    </style>
+    </style> -->
     {% block extra_css %}{% endblock %}
     
 </head>
