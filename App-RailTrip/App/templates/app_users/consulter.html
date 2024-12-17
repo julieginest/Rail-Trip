@@ -32,6 +32,18 @@
         </div>
         {% endif %}
         <h1 class="profile-title">Consulter des roadtrips</h1>
+
+        <!-- Formulaire de filtrage --> 
+         <form method="GET" action="{% url 'consulter' %}"> 
+            <label for="duree">Durée en jours :</label> 
+            <input type="number" name="duree" id="duree"> 
+            <label for="depart">Ville de départ :</label> 
+            <input type="text" name="depart" id="depart"> 
+            <button type="submit" class="button-filtrer">Filtrer</button> 
+            <a href="{% url 'consulter' %}" class="button-filtrer">Réinitialiser</a>
+        </form>
+
+        
         <div class="trajet-results">
             {% for roadtrip in roadtrips %}
             <div>

@@ -3,7 +3,6 @@ from .user import Utilisateur
 
 class RoadTrip(models.Model):
     id = models.AutoField(primary_key=True)
-    nom = models.CharField(max_length=100)  # Nouveau champ
     publique = models.BooleanField(default=False)
     etapes = models.CharField(max_length=255)
     depart = models.DateField()
