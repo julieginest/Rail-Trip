@@ -17,7 +17,7 @@ class TransportService:
 # Récupération du .env
     load_dotenv()
     API_KEY = os.getenv('API_KEY')
-    API_LINK = os.getenv('API_LINK') | 'https://api.sncf.com/v1/coverage/sncf/'
+    API_LINK = os.getenv('API_LINK') or 'https://api.sncf.com/v1/coverage/sncf/'
 
     def _time_multiplier(self, x):
         """Calculate time-based price multiplier"""
