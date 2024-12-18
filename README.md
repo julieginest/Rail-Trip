@@ -25,6 +25,8 @@ Notre projet offre une nouvelle vision le concept traditionnel du roadtrip en le
     - Recevoir des propositions de billets pour chaque trajet du roadtrip.
     - **Enregistrer** votre roadtrip (sans sélection des billets)
     - Les roadtrips enregistrés sont accessibles dans vos enregistrements, où vous pouvez redemander l'affichage des billets.
+    <br> Gestion de la création des roadtrips : 
+    ```App>App>views>roadtrip.py```
 
 2. Gestion des roadtrips :
     - **Consulter** les roadtrips **publics** des autres utilisateurs. <br>```App>App>>views>consulter.py```
