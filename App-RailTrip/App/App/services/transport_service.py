@@ -7,11 +7,16 @@ import urllib.parse as url
 import json
 import time
 import random
-
+##### Pour .env #####
+from dotenv import load_dotenv
+#####################
 
 class TransportService:
-    API_KEY = "e49dbfec-a940-407b-b845-49c8fe8439b5"
-    API_LINK = "https://api.sncf.com/v1/coverage/sncf"
+    
+    # Récupération du .env
+    load_dotenv()
+    API_KEY = os.getenv('API_KEY')
+    API_LINK = os.getenv('API_LINK') | 'https://api.sncf.com/v1/coverage/sncf/'
 
     def __init__(self):
         self.user_agents = [
