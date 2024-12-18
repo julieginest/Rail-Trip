@@ -51,26 +51,26 @@ body {
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 2; 
+    z-index: 2;
 }
 
 .home-subtitle{
     font-family: "Mada", sans-serif;
     font-size: 2rem;
     color: white;
-    position: absolute; 
-    top: 40%; 
+    position: absolute;
+    top: 40%;
     left: 50%;
-    transform: translateX(-50%); 
-    z-index: 2; 
-    text-align: center; 
+    transform: translateX(-50%);
+    z-index: 2;
+    text-align: center;
 }
 
 .search-form {
     display: flex;
     flex-wrap: wrap;
-    align-items: center; 
-    justify-content: center; 
+    align-items: center;
+    justify-content: center;
     padding: 1rem;
     background-color: #f8f9fa;
     border: 1px solid #ddd;
@@ -95,26 +95,26 @@ body {
 
 .items-forms {
     display: flex;
-    justify-content: space-between; 
-    gap: 2rem; 
+    justify-content: space-between;
+    gap: 2rem;
 }
 
 .item-form {
     display: flex;
-    flex-direction: column; 
-    width: 49%; 
+    flex-direction: column;
+    width: 49%;
 }
 
 .left-column {
-    align-items: flex-start; 
+    align-items: flex-start;
 }
 
 .right-column {
-    align-items: flex-start; 
+    align-items: flex-start;
 }
 
 .form-group-home {
-    margin-bottom: 1rem; 
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
 }
@@ -122,8 +122,8 @@ body {
 
 .search-form input,
 .search-form select {
-    width: auto; 
-    flex: 1; 
+    width: auto;
+    flex: 1;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
@@ -153,14 +153,28 @@ body {
     padding: 1rem 2rem;
 }
 
-.trajet-results{
+.trajet-results {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 1.5rem; 
-    text-align: center;
-    margin: 2rem auto; 
-    max-width: 1200px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
+
+.trajet-results > div {
+    background: white;
+    border-radius: 2rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.trajet-results > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(227, 145, 133, 0.2);
+}
+
 
 .trajet-card {
     background: white;
@@ -437,11 +451,11 @@ body {
 }
 
 .container-profile {
-    margin-left: 250px; 
+    margin-left: 250px;
     padding: 0 5rem;
-    flex: 1; 
+    flex: 1;
     background-color: #EFEFEF;
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
 .profile-header h1 {
@@ -485,40 +499,6 @@ body {
 }
 
 /* ==================== ENREGISTREMENTS ==================== */
-
-.card-body{
-    width: 30%;
-    display: block;
-}
-
-.img-roadtrip{
-    width: 100%;
-    border-radius: 4rem 4rem 0 0;
-}
-
-.content-roadtrips{
-    background-color: #E39185;
-    padding: 0.5rem 1rem 1rem 1rem;
-    border-radius: 0 0 4rem 4rem;
-    color: white;
-}
-
-.card-title{
-    font-size: 2rem;
-    margin: 0;
-}
-
-.button-supprimer{
-    padding: 0.6rem;
-    background-color: white;
-    border: none;
-    border-radius: 5rem;
-}
-
-.button-supprimer:hover{
-    background-color: #D9D9D9;
-    cursor: pointer;
-}
 
 /* ==================== FAVORIS ==================== */
 
@@ -569,8 +549,8 @@ body {
     display: inline-block;
     margin: 10px 5px;
     padding: 10px 20px;
-    background-color: grey; 
-    color: white; 
+    background-color: grey;
+    color: white;
     border: darkslategrey;
     cursor: pointer;
     text-align: center;
@@ -584,6 +564,11 @@ body {
     background-color: #45a049; /* Couleur de fond plus foncée au survol */
 }
 
+@media (max-width: 1200px) {
+    .trajet-results {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
 
 /* Mobile (écrans plus petits que 768px) */
 @media (max-width: 768px) {
@@ -627,15 +612,21 @@ body {
     }
 
     .trajet-results {
-        display: block; /* Les éléments se placent les uns en dessous des autres */
+        grid-template-columns: 1fr;
+        padding: 1rem;
     }
 
-    .trajet-results > div {
-        margin-bottom: 20px; /* Un peu d'espace entre les éléments */
+    .profile-title {
+        font-size: 1.5rem;
+        text-align: center;
     }
 
-    .card-title{
+    .card-title {
         font-size: 1.2rem;
+    }
+
+    .content-roadtrips {
+        padding: 1rem;
     }
 
     .home-title{
@@ -661,7 +652,7 @@ body {
     }
 
     .search-form{
-        bottom: -15rem;  
+        bottom: -15rem;
     }
 
     .search-grid {

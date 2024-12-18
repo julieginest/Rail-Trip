@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'roadtrip/enregistrement.css' %}">
+
+    
 <div class="enregistrements-layout">
     <div class="div-menu-toggle">
         <button onclick="toggleSidebar()" class="menu-toggle"><i class="ri-menu-line"></i></button>
@@ -28,7 +31,11 @@
             <div>
                 <img src="../../static/img/roadtrip.webp" alt="image roadtrip" class="img-roadtrip">
                 <div class="content-roadtrips">
-                    <h5 class="card-title">{{ roadtrip.etapes }}</h5>
+                    <h5 class="card-title">
+                        {% for etape in roadtrip.etapes %}
+                            {{ etape|capfirst }}{% if not forloop.last %} → {% endif %}
+                        {% endfor %}
+                    </h5>
                     <p><strong>Départ :</strong> {{ roadtrip.depart }}</p>
                     <p><strong>Durée :</strong> {{ roadtrip.nbjour }} jours</p>
                     <p>{{ roadtrip.description }}</p>
@@ -48,10 +55,9 @@
 </div>
 <script>
     function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.classList.toggle('open');
-}
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('open');
+    }
 </script>
 {% include '../includes/footer.html' %}
 {% endblock %}
-

@@ -1,0 +1,187 @@
+.enregistrements-layout {
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container-profile {
+    margin-left: 250px;
+    padding: 2rem;
+    flex: 1;
+    background-color: #EFEFEF;
+    min-height: 100vh;
+}
+
+.profile-title {
+    font-size: 2rem;
+    color: #333;
+    margin: 0 0 2rem 0;
+    padding: 0 1rem;
+    font-weight: 600;
+    position: relative;
+}
+
+.profile-title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 1rem;
+    width: 50px;
+    height: 3px;
+    background: #E39185;
+    border-radius: 2px;
+}
+
+.trajet-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.trajet-results > div {
+    background: white;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.trajet-results > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(227, 145, 133, 0.15);
+}
+
+.img-roadtrip {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.trajet-results > div:hover .img-roadtrip {
+    transform: scale(1.05);
+}
+
+.content-roadtrips {
+    background: linear-gradient(135deg, #E39185, #e37f72);
+    padding: 1.5rem;
+    color: white;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    margin: 0 0 1.2rem 0;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.card-title i {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.content-roadtrips p {
+    margin: 0.8rem 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.content-roadtrips strong {
+    font-weight: 600;
+    opacity: 1;
+    color: white;
+}
+
+.button-supprimer {
+    margin-top: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    background-color: white;
+    border: none;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #E39185;
+}
+
+.button-supprimer i {
+    font-size: 1.2rem;
+}
+
+.button-supprimer:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #e37f72;
+}
+
+.text-center {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    padding: 3rem;
+    background: white;
+    border-radius: 1rem;
+    margin: 2rem auto;
+    max-width: 500px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 1200px) {
+    .trajet-results {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .container-profile {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .trajet-results {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .profile-title {
+        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .profile-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    .content-roadtrips {
+        padding: 1rem;
+    }
+
+    .button-supprimer {
+        width: 100%;
+        justify-content: center;
+    }
+}
