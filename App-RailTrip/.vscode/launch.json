@@ -1,0 +1,73 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Django Runserver",
+            "type": "python",
+            "request": "launch",
+            "program": "App-RailTrip/App/manage.py",
+            "args": [
+                "runserver"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Make Migrations",
+            "type": "python",
+            "request": "launch",
+            "program": "App-RailTrip/App/manage.py",
+            "args": [
+                "makemigrations"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Migrate",
+            "type": "python",
+            "request": "launch",
+            "program": "App-RailTrip/App/manage.py",
+            "args": [
+                "migrate"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Clear Migrations",
+            "type": "python",
+            "request": "launch",
+            "program": "App-RailTrip/App/manage.py",
+            "args": [
+                "migrate",
+                "App",
+                "zero"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Django Shell",
+            "type": "python",
+            "request": "launch",
+            "program": "App-RailTrip/App/manage.py",
+            "args": [
+                "shell"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Django Tests",
+            "type": "python",
+            "request": "launch",
+            "program": "App-RailTrip/App/manage.py",
+            "args": [
+                "test"
+            ],
+            "django": true,
+            "justMyCode": true
+        }
+    ]
+}
