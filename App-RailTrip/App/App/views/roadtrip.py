@@ -62,7 +62,6 @@ class RoadTripCreateView(CreateView):
                     print(f"Erreur pour l'heure {heure}: {str(e)}")
                     continue
 
-            # Trier par prix et prendre les 5 meilleures options
             sorted_options = sorted(all_options, key=lambda x: x[0].get('total_price', float('inf')))
             return sorted_options[:5] if sorted_options else []
 
@@ -107,7 +106,6 @@ class RoadTripCreateView(CreateView):
 
             utilisateur = Utilisateur.objects.get(id=user_id)
 
-            # Récupération des villes
             cities = [
                 city for city in [
                     request.POST.get('depart'),
@@ -118,13 +116,11 @@ class RoadTripCreateView(CreateView):
             ]
             print("Villes récupérées:", cities)
 
-            # Validation des villes
             is_valid, error_message = self.validate_cities(cities)
             if not is_valid:
                 messages.error(request, error_message)
                 return self.form_invalid(form)
 
-            # Récupération des dates
             dates = []
             date_fields = ['depart_date', 'etape1_date', 'etape2_date', 'arrivee_date']
             for i, city in enumerate(cities):
@@ -137,7 +133,6 @@ class RoadTripCreateView(CreateView):
                 messages.error(request, "Les dates doivent être chronologiques.")
                 return self.form_invalid(form)
 
-            # Traitement selon l'action
             if action == 'search':
                 return self._handle_search(request, form, cities, dates, utilisateur)
             elif action == 'confirm':
@@ -196,7 +191,15 @@ class RoadTripCreateView(CreateView):
     def _handle_confirm(self, request, form, dates, utilisateur):
         """Gère la confirmation et création du roadtrip"""
         try:
-            # Ajouter une heure spécifique pour éviter les problèmes de timezone
+            cities = [
+                city for city in [
+                    request.POST.get('depart'),
+                    request.POST.get('etape1'),
+                    request.POST.get('etape2'),
+                    request.POST.get('arrivee')
+                ] if city and city.strip()
+            ]
+
             depart_date = dates[0]
             retour_date = dates[-1]
 
@@ -210,7 +213,8 @@ class RoadTripCreateView(CreateView):
                 depart=depart_time,
                 retour=retour_time,
                 nom=f"Voyage du {depart_time.strftime('%d/%m/%Y')}",
-                nbjour=(retour_date - depart_date).days + 1
+                nbjour=(retour_date - depart_date).days + 1,
+                etapes=cities
             )
 
             messages.success(request, "Votre Roadtrip a été créé avec succès!")
