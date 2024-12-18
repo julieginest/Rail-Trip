@@ -1,164 +1,213 @@
 import os
-from django.conf import settings
-from datetime import date
-from Prix.func import prix
 import requests
 import urllib.parse as url
 import json
-import time
-import random
-
+from datetime import datetime, date
+import math
+from scipy.interpolate import PchipInterpolator
+import numpy as np
 
 class TransportService:
     API_KEY = "e49dbfec-a940-407b-b845-49c8fe8439b5"
     API_LINK = "https://api.sncf.com/v1/coverage/sncf"
 
-    def __init__(self):
-        self.user_agents = [
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
-        ]
+    def _time_multiplier(self, x):
+        """Calculate time-based price multiplier"""
+        x_points = np.array([0, 5, 7, 10, 14, 16, 19, 24])
+        y_points = np.array([0.5, 1, 2.5, 2.5, 1.5, 2.5, 2.5, 0.5])
+        interpolator = PchipInterpolator(x_points, y_points)
+        return interpolator(x)
+
+    def _day_multiplier(self, x, A=2, L=0.25, k=0.1):
+        """Calculate day-based price multiplier"""
+        return L + (A - L) * np.exp(-k * x)
+
+    def _network_price(self, network):
+        """Get base price per kilometer for different train networks"""
+        tgv = ["DB SNCF", "Eurostar", "TGV INOUI", "TGV Lyria"]
+        tgv_low_cost = ["OUIGO", "OUIGO Train Classique"]
+        ters = ["Aléop", "BreizhGo", "FLUO", "LEX", "MOBIGO", "NOMAD", "NightJet",
+                "REGIONAURA", "RÉMI", "RÉMI Exp.", "SNCF", "SOLEA", "TER", "TER HDF", "TER NA"]
+        intercite = ["Intercités", "Intercités de nuit"]
+
+        if network in tgv:
+            return 0.5
+        if network in tgv_low_cost:
+            return 0.25
+        if network in ters:
+            return 0.07
+        if network in intercite:
+            return 0.2
+        return 0.2
+
+    def _calculate_price(self, distance, time, network):
+        """Calculate journey price based on distance, time and network"""
+        try:
+            if isinstance(time, str):
+                time = datetime.strptime(time, "%Y%m%dT%H%M%S")
+            time_float = time.hour + time.minute / 60
+        except Exception as e:
+            print(f"Error parsing time: {str(e)}")
+            time_float = 12  # Default to noon if time parsing fails
+
+        time_coefficient = self._time_multiplier(time_float)
+        
+        # Special case for Paris region transport
+        if network in ["RER", "TRANSILIEN"]:
+            return 2.5
+            
+        km_price = self._network_price(network)
+        price = (time_coefficient * distance * km_price) / math.exp(distance / 1000)
+        return round(price, 2)
 
     def find_station(self, city_name):
-        """
-        Trouve l'ID de la gare pour une ville donnée
-        """
-        auth_args = (self.API_KEY, '')
-        # Recherche des gares dans la ville
-        search_url = f"{self.API_LINK}/places?q={url.quote(city_name)}&type[]=stop_area"
+        """Find and return the station ID for a given city using advanced search"""
+        try:
+            city_name = city_name.strip().lower()
+            auth_args = (self.API_KEY, '')
 
-        response = requests.get(search_url, auth=auth_args)
+            # Use specific type filter for stations
+            search_url = (f"{self.API_LINK}/places?"
+                         f"q={url.quote(city_name)}"
+                         f"&type[]=stop_area")
 
-        if response.status_code != 200:
-            raise Exception(f"Erreur lors de la recherche de la gare: {response.text}")
+            print(f"Searching for {city_name} using URL: {search_url}")
+            response = requests.get(search_url, auth=auth_args)
 
-        data = json.loads(response.text)
-        if not data.get('places'):
-            raise Exception(f"Aucune gare trouvée pour: {city_name}")
+            if response.status_code != 200:
+                print(f"API Error for {city_name}: {response.text}")
+                raise Exception(f"Station search error: {response.text}")
 
-        # Cherche d'abord une gare principale
-        for place in data['places']:
-            if 'gare' in place['name'].lower():
-                return place['id']
+            data = json.loads(response.text)
+            
+            if not data.get('places'):
+                raise Exception(f"No station found for: {city_name}")
 
-        # Sinon retourne le premier arrêt trouvé
-        return data['places'][0]['id']
+            # Filter results based on administrative region
+            filtered_places = []
+            for place in data['places']:
+                if 'stop_area' in place:
+                    admin_regions = place['stop_area'].get('administrative_regions', [])
+                    for admin in admin_regions:
+                        if city_name in admin.get('name', '').lower():
+                            filtered_places.append(place)
+                            break
+
+            # Use filtered results if available, otherwise use first result
+            selected_place = filtered_places[0] if filtered_places else data['places'][0]
+            print(f"Selected station: {selected_place.get('name')} ({selected_place.get('id')})")
+            return selected_place['id']
+
+        except Exception as e:
+            print(f"Error processing {city_name}: {str(e)}")
+            raise Exception(f"Station search failed for {city_name}: {str(e)}")
 
     def reach(self, start, stop, journey_date=None, date_use='departure'):
         """
-        Recherche des trajets entre deux villes
+        Search for train journeys between two cities.
+        
+        Args:
+            start (str): Starting city name
+            stop (str): Destination city name 
+            journey_date (datetime): Date and time of travel 
+            date_use (str): Whether the datetime is for departure or arrival
+        
+        Returns:
+            list: List of possible journeys with details
         """
         try:
-            # Trouve les IDs des gares
+            print(f"Searching journeys from {start} to {stop} for {journey_date}")
+            
             start_id = self.find_station(start)
             stop_id = self.find_station(stop)
-
-            print(f"Gare départ ID: {start_id}")
-            print(f"Gare arrivée ID: {stop_id}")
+            
+            print(f"Found stations: {start} ({start_id}) -> {stop} ({stop_id})")
 
             auth_args = (self.API_KEY, '')
             journey_date = journey_date or date.today()
 
-            # Construction du lien avec les IDs des gares
             link = self.build_link(start_id, stop_id, journey_date, date_use)
-            print(f"URL de requête: {link}")
-
+            print(f"API Request URL: {link}")
+            
             response = requests.get(link, auth=auth_args)
 
             if response.status_code == 200:
-                return json.loads(response.text)
+                data = json.loads(response.text)
+                
+                if not data.get("journeys"):
+                    print(f"No journeys found between {start} and {stop}")
+                    return []
+                    
+                journeys = self.sanitize_data(data)
+                print(f"Found {len(journeys)} possible journeys")
+                return journeys
+                
             else:
-                print(f"Réponse de l'API: {response.text}")
-                raise Exception(f"Erreur API (from transport_service): {response.status_code}")
+                print(f"API Error Response: {response.text}")
+                raise Exception(f"API Error {response.status_code}: {response.text}")
 
         except Exception as e:
-            raise Exception(f"Erreur lors de la recherche du trajet: {str(e)}")
+            print(f"Error searching journeys: {str(e)}")
+            raise Exception(f"Journey search failed: {str(e)}")
+
+    def sanitize_data(self, data):
+        """Process and format journey data from API response"""
+        journeys = data.get("journeys", [])
+        formatted_journeys = []
+        
+        for journey in journeys:
+            total_price = 0
+            steps = []
+            
+            for section in journey.get("sections", []):
+                if section["type"] == "public_transport":
+                    # Calculer le prix pour cette étape
+                    step_price = self._calculate_price(
+                        section["geojson"]["properties"][0]["length"] / 1000,
+                        section["departure_date_time"],
+                        section["display_informations"]["network"]
+                    )
+                    total_price += step_price
+
+                    # Formater les dates
+                    departure_dt = datetime.strptime(section["departure_date_time"], "%Y%m%dT%H%M%S")
+                    arrival_dt = datetime.strptime(section["arrival_date_time"], "%Y%m%dT%H%M%S")
+
+                    step = {
+                        "type": section["type"],
+                        "network": section["display_informations"]["network"],
+                        "from": section["from"]["name"],
+                        "to": section["to"]["name"],
+                        "departure_date": departure_dt.strftime("%d/%m/%Y"),
+                        "arrival_date": arrival_dt.strftime("%d/%m/%Y"),
+                        "departure_time": departure_dt.strftime("%H:%M"),
+                        "arrival_time": arrival_dt.strftime("%H:%M"),
+                        "raw_departure": section["departure_date_time"],
+                        "raw_arrival": section["arrival_date_time"],
+                        "price": round(step_price, 2)
+                    }
+                    steps.append(step)
+
+            if steps:
+                # Ajouter le prix total au premier step
+                steps[0]["total_price"] = round(total_price, 2)
+                formatted_journeys.append(steps)
+
+        return formatted_journeys
 
     def build_link(self, start_id, stop_id, date_obj, date_use):
-        """
-        Construit l'URL pour l'API SNCF
-        """
+        """Build the API request URL for journey search"""
         date_str = date_obj.strftime("%Y%m%dT%H%M%S")
-        return (f"{self.API_LINK}/journeys?"
-                f"from={start_id}&"
-                f"to={stop_id}&"
-                f"datetime={date_str}&"
-                f"datetime_represents={date_use}&"
-                f"count=5&"  # Nombre de résultats souhaités
-                f"min_nb_journeys=3")  # Nombre minimum de trajets
-
-    def get_station_details(self, station_id):
-        """
-        Récupère les détails d'une gare à partir de son ID
-        """
-        auth_args = (self.API_KEY, '')
-        url = f"{self.API_LINK}/stop_areas/{station_id}"
-
-        response = requests.get(url, auth=auth_args)
-        if response.status_code == 200:
-            data = json.loads(response.text)
-            return data.get('stop_areas', [{}])[0]
-        return None
-
-    def format_journey_response(self, api_response, start_name, stop_name):
-        """
-        Formate la réponse de l'API en un format plus utilisable
-        """
-        journeys = []
-
-        for journey in api_response.get('journeys', []):
-            sections = journey.get('sections', [])
-            train_sections = [s for s in sections if s.get('type') == 'public_transport']
-
-            if train_sections:
-                first_section = train_sections[0]
-                last_section = train_sections[-1]
-
-                # Formatage de la durée
-                duration_minutes = journey.get('duration', 0) // 60
-                if duration_minutes >= 60:
-                    hours = duration_minutes // 60
-                    minutes = duration_minutes % 60
-                    duration_str = f"{hours}h{minutes:02d}"
-                else:
-                    duration_str = f"{duration_minutes}min"
-                price = 0
-                for p in journey["sections"]:
-                    if (p["type"] == "public_transport"):
-                        price += prix(p["geojson"]["properties"][0]["length"] / 1000, p["departure_date_time"], p["display_informations"]["network"])
-
-                formatted_journey = {
-                    "name": f"Trajet {start_name} - {stop_name}",
-                    "start_location": start_name,
-                    "end_location": stop_name,
-                    "date": journey.get('departure_date_time', '')[:10],
-                    "start_hour": journey.get('departure_date_time', '')[9:11] + 'h' + journey.get(
-                        'departure_date_time', '')[11:13],
-                    "end_hour": journey.get('arrival_date_time', '')[9:11] + 'h' + journey.get('arrival_date_time', '')[
-                                                                                   11:13],
-                    "duration": duration_str,  # Format modifié
-                    "train_type": first_section.get('display_informations', {}).get('commercial_mode', 'Train'),
-                    "price": price,
-                    "description": self._build_journey_description(train_sections)
-                }
-                journeys.append(formatted_journey)
-
-        return journeys
-
-    def _build_journey_description(self, train_sections):
-        """
-        Construit une description détaillée du trajet
-        """
-        descriptions = []
-        for section in train_sections:
-            info = section.get('display_informations', {})
-            train_name = info.get('headsign', '')
-            train_type = info.get('commercial_mode', '')
-            descriptions.append(f"{train_type} {train_name}")
-
-        return " → ".join(descriptions) if descriptions else "Trajet direct"
-    
-
+        
+        url = (f"{self.API_LINK}/journeys?"
+               f"from={start_id}&"
+               f"to={stop_id}&"
+               f"datetime={date_str}&"
+               f"datetime_represents={date_use}&"
+               f"count=5&"
+               f"min_nb_journeys=3&"
+               f"depth=3&"
+               f"disable_geojson=false&"
+               f"equipment_details=false")
+               
+        return url

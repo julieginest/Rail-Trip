@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e86c5642-de59-49f1-9e98-584fa21d72a1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Rail-Trip.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Rail-Trip.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/App/views/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/App/views/home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/App/views/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/App/views/login.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App-RailTrip/App/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/App-RailTrip/App/templates/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,12 +45,13 @@
     &quot;Django Server.Rail-Trip.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ahceneBranch&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ahcen/Desktop/bts/Rail-Trip&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/inova/Documents/portfolio/Rail-Trip&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -69,7 +68,6 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
-        <env name="DJANGO_SETTINGS_MODULE" value="App.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -91,8 +89,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PY-242.21829.153" />
-        <option value="bundled-python-sdk-464836ebc622-b74155a9e76b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.21829.153" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
+        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
       </set>
     </attachedChunks>
   </component>
@@ -108,6 +106,8 @@
       <workItem from="1726579290416" duration="3754000" />
       <workItem from="1726912879172" duration="243000" />
       <workItem from="1733754099626" duration="526000" />
+      <workItem from="1734376564234" duration="27000" />
+      <workItem from="1734376591570" duration="1211000" />
     </task>
     <servers />
   </component>
