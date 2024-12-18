@@ -11,3 +11,4 @@ from .consulter import ConsulterView
 from .consulter import AjouterFavoriView
 from .follow import follow, unfollow
 from .roadtrip import RoadTripCreateView
+from .mentionlegal import MentionsLegalesView
