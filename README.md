@@ -1,6 +1,7 @@
 # 🚆Bienvenue dans RailTrip
----
 ###### Ahcen, Itzel, Julien, Malika
+
+---
 
 ## 🗎 Contexte :
 Notre projet offre une nouvelle vision le concept traditionnel du roadtrip en le réinventant à travers le voyage en train. Nous avons développé une application web intuitive, conçue pour simplifier la planification et la gestion de vos déplacements. Que vous soyez connecté ou non, l'application propose des fonctionnalités adaptées pour répondre à toutes vos attentes en matière de voyage.
