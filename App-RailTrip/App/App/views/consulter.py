@@ -25,9 +25,15 @@ class ConsulterView(TemplateView):
 
         roadtrips = RoadTrip.objects.filter(publique=1).exclude(utilisateur=user).select_related("utilisateur")
 
-        context = {
-        'roadtrips': roadtrips,
-        }
+        duree_filter=self.request.GET.get('duree')
+        if duree_filter:
+            roadtrips = roadtrips.filter(nbjour=duree_filter)
+
+        depart_filter = self.request.GET.get('depart') 
+        if depart_filter: 
+            roadtrips = roadtrips.filter( etapes__startswith=depart_filter )
+
+        context["roadtrips"] = roadtrips
         return context
     
 class AjouterFavoriView(View):

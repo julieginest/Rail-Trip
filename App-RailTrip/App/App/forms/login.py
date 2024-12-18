@@ -26,7 +26,7 @@ class LoginForm(forms.Form):
     def get_user(self):
         pseudo = self.cleaned_data.get("pseudo")
         try:
-            # Recherchez l'utilisateur dans le modèle Utilisateur
+            # We're getting the user instance by his pseudo
             user = Utilisateur.objects.get(pseudo=pseudo)
             return user
         except Utilisateur.DoesNotExist:

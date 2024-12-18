@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'roadtrip/style.css' %}">
+
+<div style="display:none">
+    <pre>
+    Debug Template:
+    Form: {{ form }}
+    Trips Data Present: {{ trips_data|default:"No" }}
+    {% if trips_data %}
+        Segments: {{ trips_data.segment_options|length }}
+        Cities: {{ trips_data.cities|join:", " }}
+        Dates: {{ trips_data.dates|join:", " }}
+    {% endif %}
+    </pre>
+</div>
+
+<div class="profile-layout">
+    <div class="div-menu-toggle">
+        <button onclick="toggleSidebar()" class="menu-toggle"><i class="ri-menu-line"></i></button>
+    </div>        
+    <div class="sidebar">
+        <ul class="menu">
+            <div class="close-menu">
+                <button onclick="toggleSidebar()"><i class="ri-close-line"></i></button>
+            </div>
+            <h2 class="logo logo-menu">RailTrip</h2>
+            <li><a href="{% url 'enregistrements' %}"><i class="ri-save-line"></i> Mes enregistrements</a></li>
+            <li><a href="{% url 'roadtrip' %}"><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
+            <li><a href="{% url 'favoris' %}"><i class="ri-heart-line"></i> Mes favoris</a></li>
+            <li><a href="{% url 'consulter' %}"><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
+            <li><a href="{% url 'logout' %}"><i class="ri-close-line"></i> Se déconnecter</a></li>
+        </ul>
+    </div>
+
+    <div class="container-profile">
+        <div class="profile-header">
+            <h1>Créer votre Roadtrip</h1>
+        </div>
+
+        <div class="roadtrip-form-container">
+            <form method="POST" class="roadtrip-form">
+                {% csrf_token %}
+        
+                <div class="journey-steps">
+                    <!-- Départ -->
+                    <div class="step-card">
+                        <h3>Départ</h3>
+                        <div class="step-content">
+                            <select name="depart" required>
+                                <option value="">Sélectionnez une ville</option>
+                                <option value="paris" {% if request.POST.depart == "paris" %}selected{% endif %}>Paris</option>
+                                <option value="lyon" {% if request.POST.depart == "lyon" %}selected{% endif %}>Lyon</option>
+                            </select>
+                            <div class="date-picker">
+                                <label>Date de départ</label>
+                                <input type="date" name="depart_date" required min="{% now 'Y-m-d' %}" value="{{ request.POST.depart_date }}">
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Étape 1 -->
+                    <div class="step-card">
+                        <h3>Étape 1</h3>
+                        <div class="step-content">
+                            <select name="etape1" required>
+                                <option value="">Sélectionnez une ville</option>
+                                <option value="paris" {% if request.POST.etape1 == "paris" %}selected{% endif %}>Paris</option>
+                                <option value="lyon" {% if request.POST.etape1 == "lyon" %}selected{% endif %}>Lyon</option>
+                            </select>
+                            <div class="date-picker">
+                                <label>Date d'arrivée</label>
+                                <input type="date" name="etape1_date" required min="{% now 'Y-m-d' %}" value="{{ request.POST.etape1_date }}">
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Étape 2 -->
+                    <div class="step-card">
+                        <h3>Étape 2</h3>
+                        <div class="step-content">
+                            <select name="etape2" required>
+                                <option value="">Sélectionnez une ville</option>
+                                <option value="paris" {% if request.POST.etape2 == "paris" %}selected{% endif %}>Paris</option>
+                                <option value="lyon" {% if request.POST.etape2 == "lyon" %}selected{% endif %}>Lyon</option>
+                            </select>
+                            <div class="date-picker">
+                                <label>Date d'arrivée</label>
+                                <input type="date" name="etape2_date" required min="{% now 'Y-m-d' %}" value="{{ request.POST.etape2_date }}">
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Arrivée -->
+                    <div class="step-card">
+                        <h3>Arrivée</h3>
+                        <div class="step-content">
+                            <select name="arrivee" required>
+                                <option value="">Sélectionnez une ville</option>
+                                <option value="paris" {% if request.POST.arrivee == "paris" %}selected{% endif %}>Paris</option>
+                                <option value="lyon" {% if request.POST.arrivee == "lyon" %}selected{% endif %}>Lyon</option>
+                            </select>
+                            <div class="date-picker">
+                                <label>Date d'arrivée</label>
+                                <input type="date" name="arrivee_date" required min="{% now 'Y-m-d' %}" value="{{ request.POST.arrivee_date }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton recherche billets -->
+                {% if not trips_data %}
+                <div class="form-actions">
+                    <button type="submit" name="action" value="search" class="button-roadtrip">Voir les billets disponibles</button>
+                </div>
+                {% endif %}
+
+                <!-- Affichage des billets -->
+                {% if trips_data %}
+                <div class="tickets-display">
+                    <h3>Billets disponibles</h3>
+                    <div class="tickets-grid">
+                        {% for segment_options in trips_data.segment_options %}
+                            <div class="segment-section">
+                                {% if forloop.first %}
+                                    <h4>Départ → Étape 1</h4>
+                                {% elif forloop.last %}
+                                    <h4>Étape {{ forloop.counter0 }} → Arrivée</h4>
+                                {% else %}
+                                    <h4>Étape {{ forloop.counter0 }} → Étape {{ forloop.counter }}</h4>
+                                {% endif %}
+                                <div class="ticket-cards">
+                                    {% for journey in segment_options %}
+                                        <div class="ticket-card {% if journey.selected %}selected{% endif %}">
+                                            <div class="ticket-header">
+                                                <div class="ticket-info">
+                                                    <h5>Option {{ forloop.counter }}</h5>
+                                                    <span class="departure-time">Le {{ journey.0.departure_date }} à {{ journey.0.departure_time }}</span>
+                                                </div>
+                                                <span class="price">{{ journey.0.total_price }}€</span>
+                                            </div>
+                                            {% for step in journey %}
+                                            <div class="journey-step">
+                                                <div class="step-info">
+                                                    <div class="stations">
+                                                        <span>{{ step.from }}</span>
+                                                        <i class="ri-arrow-right-line"></i>
+                                                        <span>{{ step.to }}</span>
+                                                    </div>
+                                                    <div class="times">
+                                                        <span>{{ step.departure_time }}</span>
+                                                        <i class="ri-arrow-right-line"></i>
+                                                        <span>{{ step.arrival_time }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="train-info">
+                                                    <span class="network">{{ step.network }}</span>
+                                                    <span class="step-price">{{ step.price }}€</span>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="form-group-roadtrip">
+                    <label for="{{ form.description.id_for_label }}">Description du voyage</label>
+                    <textarea name="description" id="{{ form.description.id_for_label }}" required>{{ request.POST.description }}</textarea>
+                    {% if form.description.errors %}
+                        <div class="error">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+        
+                <div class="form-group-roadtrip">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="publique" {% if request.POST.publique %}checked{% endif %}>
+                        Rendre ce roadtrip public
+                    </label>
+                    {% if form.publique.errors %}
+                        <div class="error">{{ form.publique.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Bouton de confirmation -->
+                {% if trips_data %}
+                <div class="form-actions">
+                    <button type="submit" name="action" value="confirm" class="button-roadtrip button-confirm">Confirmer le Roadtrip</button>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

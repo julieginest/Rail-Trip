@@ -14,7 +14,7 @@
             </div>
             <h2 class="logo logo-menu">RailTrip</h2>
             <li><a href="{% url 'enregistrements' %}"><i class="ri-save-line"></i> Mes enregistrements</a></li>
-            <li><a href=""><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
+            <li><a href="{% url 'roadtrip' %}"><i class="ri-road-map-line"></i> Créer un roadtrip</a></li>
             <li><a href="{% url 'favoris' %}"><i class="ri-heart-line"></i> Mes favoris</a></li>
             <li><a href="{% url 'consulter' %}"><i class="ri-search-line"></i> Consulter des roadtrips</a></li>
             <li><a href="{% url 'logout' %}"><i class="ri-close-line"></i> Se déconnecter</a></li>
@@ -32,6 +32,18 @@
         </div>
         {% endif %}
         <h1 class="profile-title">Consulter des roadtrips</h1>
+
+        <!-- Formulaire de filtrage --> 
+         <form method="GET" action="{% url 'consulter' %}"> 
+            <label for="duree">Durée en jours :</label> 
+            <input type="number" name="duree" id="duree"> 
+            <label for="depart">Ville de départ :</label> 
+            <input type="text" name="depart" id="depart"> 
+            <button type="submit" class="button-filtrer">Filtrer</button> 
+            <a href="{% url 'consulter' %}" class="button-filtrer">Réinitialiser</a>
+        </form>
+
+        
         <div class="trajet-results">
             {% for roadtrip in roadtrips %}
             <div>
