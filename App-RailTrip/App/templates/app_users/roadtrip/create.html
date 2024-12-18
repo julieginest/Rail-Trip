@@ -4,18 +4,29 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'roadtrip/style.css' %}">
 
-<div style="display:none">
-    <pre>
-    Debug Template:
-    Form: {{ form }}
-    Trips Data Present: {{ trips_data|default:"No" }}
-    {% if trips_data %}
-        Segments: {{ trips_data.segment_options|length }}
-        Cities: {{ trips_data.cities|join:", " }}
-        Dates: {{ trips_data.dates|join:", " }}
-    {% endif %}
-    </pre>
-</div>
+<div class="loading-backdrop" id="loadingBackdrop"></div>
+<div class="loading-spinner" id="loadingSpinner">
+    <div class="loading-spinner-inner"></div>
+    <div class="loading-text">Recherche des trajets en cours...</div>
+</div>    
+    
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.roadtrip-form');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const loadingBackdrop = document.getElementById('loadingBackdrop');
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const submitButton = e.submitter;
+            if (submitButton && submitButton.value === 'search') {
+                loadingSpinner.style.display = 'block';
+                loadingBackdrop.style.display = 'block';
+            }
+        });
+    }
+});
+</script>
 
 <div class="profile-layout">
     <div class="div-menu-toggle">

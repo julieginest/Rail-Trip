@@ -95,6 +95,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'App.wsgi.application'
 
+#Pour les heures sinon Django ne va pas être content
+USE_TZ = True
+TIME_ZONE = 'Europe/Paris'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
