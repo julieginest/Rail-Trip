@@ -2,14 +2,22 @@ import os
 import requests
 import urllib.parse as url
 import json
+import time
+import random
 from datetime import datetime, date
 import math
 from scipy.interpolate import PchipInterpolator
 import numpy as np
 
+##### Pour .env #####
+from dotenv import load_dotenv
+#####################
+
 class TransportService:
-    API_KEY = "e49dbfec-a940-407b-b845-49c8fe8439b5"
-    API_LINK = "https://api.sncf.com/v1/coverage/sncf"
+# Récupération du .env
+    load_dotenv()
+    API_KEY = os.getenv('API_KEY')
+    API_LINK = os.getenv('API_LINK') or 'https://api.sncf.com/v1/coverage/sncf/'
 
     def _time_multiplier(self, x):
         """Calculate time-based price multiplier"""

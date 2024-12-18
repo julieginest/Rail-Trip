@@ -18,11 +18,11 @@ from django.contrib.messages import constants as message_constants
 # Récupération du .env
 load_dotenv()
 
-DATABASE_ADRESS = os.getenv('DATABASE_ADRESS')
-DATABASE_PORT = os.getenv('DATABASE_PORT')
-DATABASE_NAME = os.getenv('DATABASE_NAME')
-DATABASE_USER = os.getenv('DATABASE_USER')
-DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
+DATABASE_ADRESS = os.getenv('DATABASE_ADRESS') or 'localhost'
+DATABASE_PORT = os.getenv('DATABASE_PORT') or 3307
+DATABASE_NAME = os.getenv('DATABASE_NAME') or 'railtrip'
+DATABASE_USER = os.getenv('DATABASE_USER') or 'root'
+DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD') or 'your_password'
 
 
 
