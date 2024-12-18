@@ -1,4 +1,6 @@
 # 🚆Bienvenue dans RailTrip
+---
+###### Ahcen, Itzel, Julien, Malika
 
 ## 🗎 Contexte :
 Notre projet offre une nouvelle vision le concept traditionnel du roadtrip en le réinventant à travers le voyage en train. Nous avons développé une application web intuitive, conçue pour simplifier la planification et la gestion de vos déplacements. Que vous soyez connecté ou non, l'application propose des fonctionnalités adaptées pour répondre à toutes vos attentes en matière de voyage.
@@ -31,36 +33,54 @@ Notre projet offre une nouvelle vision le concept traditionnel du roadtrip en le
     <br>Suppression un roadtrip : ```App>App>>views>enregistrements.py```
     <br>Supprimer un favoris : ```App>App>>views>favoris.py```
 
-## 🔨 Installation et paramétrage :
-- Prérequis (logiciel)
-- Commandes à exécuter
-- BDD
+## 🔨 Installations et paramétrages
 
-## Démarage du projet
-
-
-
-
-
-## Variables d'environement:
-
-- API_KEY : Clef de l'API SNCF
-- API_LINK : Adresse de l'API
-
-<!--  -->
-
-- DATABASE_ADRESS : Adresse de mariadb
-- DATABASE_NAME : Nom de la base de donnée
-- DATABASE_USER : Utilisateur MariaDB
-- DATABASE_PASSWORD : Mot de passe de l'utilisateur MariaDB
-
-## Structure:
+### Structure
 
 ```
 /Rail-Trip
-├─ App-RailTrip    --Dossier python venv--
-│  └─ App          --Dossier Django--
+├─ App-RailTrip      --Dossier python venv--
+│  └─ App            --Dossier Django--
 │
-├─ README.md       --Ce fichier--
-└─ .env            --Ficher des variables d'environment--
+├─ README.md         --Ce fichier--
+├─ Requirements.txt  --Librairies requis--
+└─ .env              --Ficher des variables d'environment--
+```
+
+### Prérequis
+
+Serveur dès **python 3.13.0**<br/>
+&emsp;-> Les librairie requis sont dans `./Requirements.txt`<br/>
+&emsp;-> Pour tout installer executer `python -m pip install -r .\Requirements.txt`<br/>
+BDD dès **MariaDB 10.11.9**<br/>
+&emsp;-> Créer une base de donner spécialement pour l'application
+
+### Variables d'environnement
+A mettre dans le `.env`
+##### Pour la BDD
+`DATABASE_ADRESS`<br/>
+&emsp;-> Adresse du serveur de BDD *(default "`localhost`")*<br/>
+`DATABASE_PORT`<br/>
+&emsp;-> Port sur lequel écoute le serveur de BDD *(default `3307`)*<br/>
+`DATABASE_USER`<br/>
+&emsp;-> Utilisateur de la BDD *(default "`root`")*<br/>
+`DATABASE_PASSWORD`<br/>
+&emsp;-> Mot de passe de l'utilisateur de la BDD *(default "`your_password`")*<br/>
+`DATABASE_NAME`<br/>
+&emsp;-> Nom de la BDD sur le serveur *(default "`railtrip`")*
+
+##### Pour l'API
+`API_LINK`<br/>
+&emsp;-> Lien de l'API *(default "`https://api.sncf.com/v1/coverage/sncf/`")*<br/>
+`API_KEY`<br/>
+&emsp;-> Clef de l'API *(rien par default)*
+>**⚠️ L'API SNCF nécessite une clef. Elle s'obtient [ici](https://numerique.sncf.com/startup/api/token-developpeur/)⚠️**
+
+
+## 🚀 Démarrage
+Depuis `./App-RailTrip/App` lancer:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
 ```
