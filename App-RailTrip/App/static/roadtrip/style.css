@@ -71,6 +71,441 @@
     background-color: #e39285b3;
 }
 
+/* Style des cartes d'étapes */
+.journey-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+}
+
+.journey-steps::before {
+    content: '';
+    position: absolute;
+    left: 2rem;
+    top: 4rem;
+    bottom: 4rem;
+    width: 2px;
+    background: linear-gradient(to bottom, #E39185 45%, transparent 45%, transparent 55%, #E39185 55%);
+    z-index: 0;
+}
+
+.step-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.step-card h3 {
+    color: #E39185;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.step-card h3::before {
+    content: '';
+    width: 1rem;
+    height: 1rem;
+    background: #E39185;
+    border-radius: 50%;
+    display: block;
+}
+
+.step-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* Style des champs de sélection et de date */
+.step-content select,
+.step-content input[type="date"] {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(227, 145, 133, 0.2);
+    border-radius: 1rem;
+    font-size: 1rem;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.step-content select:focus,
+.step-content input[type="date"]:focus {
+    outline: none;
+    border-color: #E39185;
+    box-shadow: 0 0 0 4px rgba(227, 145, 133, 0.1);
+}
+
+/* Style du bouton */
+.button-roadtrip {
+    background: linear-gradient(135deg, #E39185, #e37f72);
+    color: white;
+    padding: 1.2rem 2.5rem;
+    border: none;
+    border-radius: 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 2rem auto;
+    display: block;
+    width: auto;
+    min-width: 250px;
+}
+
+.button-roadtrip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(227, 145, 133, 0.4);
+}
+
+.tickets-display {
+    margin: 2rem 0;
+}
+
+.tickets-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.segment-section {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.segment-section h4 {
+    color: #E39185;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.ticket-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.ticket-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.ticket-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(227, 145, 133, 0.2);
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.ticket-header h5 {
+    color: #333;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #E39185;
+}
+
+.journey-step {
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.journey-step:last-child {
+    border-bottom: none;
+}
+
+.step-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stations {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 500;
+}
+
+.stations i {
+    color: #E39185;
+}
+
+.times {
+    color: #666;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.train-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.8rem;
+}
+
+.network {
+    color: #666;
+    font-size: 0.9rem;
+    background: #f8f9fa;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+}
+
+.step-price {
+    color: #E39185;
+    font-weight: 500;
+}
+
+.ticket-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.departure-time {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+}
+
+.ticket-header .ticket-info h5 {
+    margin-bottom: 0;
+}
+
+.form-actions {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.button-confirm {
+    background-color: #28a745;
+    margin-top: 20px;
+}
+
+.button-confirm:hover {
+    background-color: #218838;
+}
+
+.roadtrip-form-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 2rem auto;
+}
+
+.roadtrip-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Description et checkbox */
+.form-group-roadtrip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.form-group-roadtrip label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group-roadtrip textarea {
+    padding: 1rem;
+    border: 2px solid rgba(227, 145, 133, 0.2);
+    border-radius: 1rem;
+    font-size: 1rem;
+    min-height: 100px;
+    resize: vertical;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Boutons */
+.form-actions {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.button-roadtrip {
+    background: linear-gradient(135deg, #E39185, #e37f72);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+.button-roadtrip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(227, 145, 133, 0.4);
+}
+
+.button-confirm {
+    background: linear-gradient(135deg, #28a745, #218838);
+}
+
+.button-confirm:hover {
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+}
+
+/* Affichage des billets */
+.tickets-display {
+    margin: 2rem 0;
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.tickets-display h3 {
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.segment-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+}
+
+.ticket-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.ticket-card {
+    background: white;
+    border: 1px solid rgba(227, 145, 133, 0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.ticket-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.journey-step {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: #f8f9fa;
+}
+
+/* Messages d'erreur */
+.error {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .roadtrip-form-container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .ticket-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .button-roadtrip {
+        width: 100%;
+    }
+
+    .journey-step {
+        padding: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .ticket-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .segment-section {
+        padding: 1rem;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .step-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .journey-steps::before {
+        left: 1.5rem;
+    }
+
+    .step-card {
+        padding: 1rem;
+    }
+
+    .button-roadtrip {
+        width: 100%;
+        min-width: unset;
+    }
+}
+
 @media (max-width: 768px) {
     .etapes-container {
         grid-template-columns: 1fr;
@@ -86,3 +521,5 @@
         width: 100%;
     }
 }
+
+

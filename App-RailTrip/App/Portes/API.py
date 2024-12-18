@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 # Récupération du .env
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
-API_LINK = os.getenv('API_LINK')
+API_LINK = os.getenv('API_LINK') or 'https://api.sncf.com/v1/coverage/sncf/'
 
 # Lien de l'API OSM
 API_OSM = 'https://nominatim.openstreetmap.org/search.php?format=jsonv2&q='
