@@ -4,7 +4,6 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'roadtrip/enregistrement.css' %}">
 
-    
 <div class="enregistrements-layout">
     <div class="div-menu-toggle">
         <button onclick="toggleSidebar()" class="menu-toggle"><i class="ri-menu-line"></i></button>
@@ -12,7 +11,7 @@
     <div class="sidebar">
         <ul class="menu">
             <div class="close-menu">
-                <button onclick="toggleSidebar()" class=""><i class="ri-close-line"></i></button>
+                <button onclick="toggleSidebar()"><i class="ri-close-line"></i></button>
             </div>
             <h2 class="logo logo-menu">RailTrip</h2>
             <li><a href="{% url 'enregistrements' %}"><i class="ri-save-line"></i> Mes enregistrements</a></li>
@@ -24,40 +23,84 @@
     </div>
 
     <div class="container-profile">
-        <h1 class="profile-title">Mes Enregistrements</h1>
+        {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} fade-out">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h1 class="profile-title">
+            Mes Enregistrements
+            {% if roadtrips.count %}
+                <span class="count-badge">{{ roadtrips.count }}</span>
+            {% endif %}
+        </h1>
 
         <div class="trajet-results">
             {% for roadtrip in roadtrips %}
-            <div>
-                <img src="../../static/img/roadtrip.webp" alt="image roadtrip" class="img-roadtrip">
+            <div class="roadtrip-card">
+                <div class="roadtrip-image">
+                    <img src="{% static 'img/roadtrip.webp' %}" alt="image roadtrip" class="img-roadtrip">
+                </div>
                 <div class="content-roadtrips">
                     <h5 class="card-title">
                         {% for etape in roadtrip.etapes %}
-                            {{ etape|capfirst }}{% if not forloop.last %} → {% endif %}
+                            <span class="etape">{{ etape|capfirst }}</span>
+                            {% if not forloop.last %}
+                                <i class="ri-arrow-right-line"></i>
+                            {% endif %}
                         {% endfor %}
                     </h5>
-                    <p><strong>Départ :</strong> {{ roadtrip.depart }}</p>
-                    <p><strong>Durée :</strong> {{ roadtrip.nbjour }} jours</p>
-                    <p>{{ roadtrip.description }}</p>
-                    <form action="{% url 'delete_roadtrip' roadtrip.id %}" method="post">
+                    <div class="roadtrip-info">
+                        <p><strong>Départ :</strong> {{ roadtrip.depart|date:"d/m/Y" }}</p>
+                        <p><strong>Durée :</strong> {{ roadtrip.nbjour }} jour{{ roadtrip.nbjour|pluralize }}</p>
+                        <p class="description">{{ roadtrip.description }}</p>
+                    </div>
+                    <form action="{% url 'delete_roadtrip' roadtrip.id %}" method="post" class="delete-form">
                         {% csrf_token %}
-                        <button type="submit" class="button-supprimer"><i class="ri-delete-bin-line"></i>Supprimer</button>
+                        <button type="submit" class="button-supprimer">
+                            <i class="ri-delete-bin-line"></i>
+                            <span>Supprimer</span>
+                        </button>
                     </form>
                 </div>
             </div>
+            {% empty %}
+            <div class="empty-state">
+                <i class="ri-route-line"></i>
+                <p>Vous n'avez aucun roadtrip enregistré pour le moment.</p>
+                <a href="{% url 'roadtrip' %}" class="create-button">
+                    Créer mon premier roadtrip
+                </a>
+            </div>
             {% endfor %}
         </div>
-
-        {% if not roadtrips %}
-        <p class="text-center my-4">Vous n'avez aucun roadtrip enregistré pour le moment.</p>
-        {% endif %}
     </div>
 </div>
+    
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animation des messages
+        const messages = document.querySelectorAll('.alert');
+        messages.forEach(message => {
+            // Augmentons le délai à 4000ms (4 secondes)
+            setTimeout(() => {
+                message.classList.add('fade-out');
+                // L'animation de fondu dure 500ms
+                setTimeout(() => message.remove(), 500);
+            }, 4000); // Délai augmenté à 4 secondes
+        });
+    });
+
     function toggleSidebar() {
         const sidebar = document.querySelector('.sidebar');
         sidebar.classList.toggle('open');
     }
-</script>
+</script>    
+
 {% include '../includes/footer.html' %}
 {% endblock %}
