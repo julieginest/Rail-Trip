@@ -716,3 +716,11 @@ body {
     }
 }
 
+.result-trajet{
+    width: 50%;
+    text-align: center;
+}
+
+.img-roadtrip{
+    width: 100%;
+}

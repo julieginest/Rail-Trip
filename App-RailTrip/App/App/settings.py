@@ -22,7 +22,7 @@ DATABASE_ADRESS = os.getenv('DATABASE_ADRESS') or 'localhost'
 DATABASE_PORT = os.getenv('DATABASE_PORT') or 3307
 DATABASE_NAME = os.getenv('DATABASE_NAME') or 'railtrip'
 DATABASE_USER = os.getenv('DATABASE_USER') or 'root'
-DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD') or 'your_password'
+#DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD') or 'your_password'
 
 
 
@@ -111,7 +111,7 @@ DATABASES = {
         'NAME': DATABASE_NAME or 'railtrip',
         'HOST': DATABASE_ADRESS or "localhost",
         'USER' : DATABASE_USER or "admin",
-        'PASSWORD': DATABASE_PASSWORD or "admin",
+        #'PASSWORD': DATABASE_PASSWORD or "admin",
         'PORT': DATABASE_PORT or "3308",
         
          'OPTIONS':
