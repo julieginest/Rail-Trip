@@ -30,7 +30,8 @@ from .views import (
     AjouterFavoriView, 
     follow, 
     unfollow,
-    RoadTripCreateView
+    RoadTripCreateView,
+    MentionsLegalesView
 )
 
 urlpatterns = [
@@ -49,6 +50,7 @@ urlpatterns = [
     path('ajouter_favoris/<int:roadtrip_id>/', AjouterFavoriView.as_view(), name='ajouter_favoris'),
     path('follow/<int:utilisateur_id>/', follow, name='follow'),
     path('unfollow/<int:utilisateur_id>/', unfollow, name='unfollow'),
+    path('mentionlegal/', MentionsLegalesView.as_view(), name='mentionlegal')
 ]
 
 

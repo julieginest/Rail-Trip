@@ -16,7 +16,7 @@ class LoginView(FormView):
         # We are storing the user ID in the self.request so we can check use it as a instance once the user is connected.
         self.request.session["user_id"] = user.id
         messages.success(self.request, f"{user.pseudo}, connexion réussie.")
-        return redirect('home')
+        return redirect('profile')
 
     def form_invalid(self, form):
         messages.error(self.request, "Le formulaire est invalide.")  # Added self.request
